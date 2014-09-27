@@ -18,6 +18,7 @@ int main(int argc, char** argv) {
     cin >> a;
     cout << a;
     cout <<"Changed";
+    cout << "Pues eso";
     
     return 0;
 }
