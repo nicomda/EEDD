@@ -17,7 +17,6 @@ int main(int argc, char** argv) {
     cout << "HOLA";
     cin >> a;
     cout << a;
-    cout << "ELELELELELELELELELE"
     
     return 0;
 }
