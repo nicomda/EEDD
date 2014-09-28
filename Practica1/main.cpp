@@ -6,6 +6,7 @@
  */
 
 #include <cstdlib>
+#include <iostream>
 
 using namespace std;
 
@@ -15,9 +16,7 @@ using namespace std;
 int main(int argc, char** argv) {
     int a;
     cout << "HOLA";
-    cin >> a;
-    cout << a;
-    std::cout << "Nicomda" << endl;
+    cout << "Nicomda" << endl;
     return 0;
 }
 
