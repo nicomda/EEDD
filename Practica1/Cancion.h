@@ -21,8 +21,6 @@ public:
 	Cancion(const Cancion& orig);
 	virtual ~Cancion();
 private:
-
 };
 
 #endif	/* CANCION_H */
-

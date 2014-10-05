@@ -20,6 +20,6 @@ Peticion::~Peticion() {
 }
 
 void Peticion::AnadePeticion (int cod) {
-    
+    _nPetic++;
 }
 

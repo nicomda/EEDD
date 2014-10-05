@@ -14,9 +14,10 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
-    int a;
-    cout << "HOLA";
-    cout << "Nicomda" << endl;
+    int *test = new int[10];
+    for (int c = 0; c < 15; ++c) {         
+        test[c] = 0; 
+    }
     return 0;
 }
 
