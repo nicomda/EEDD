@@ -3,4 +3,4 @@ EEDD
 
 Repositorio para EEDD
 
-HOLA ARTURITO TÓCAME EL PITO
+@Arthupan dice: De mayor quiero ser como @nicomda xD.
