@@ -11,21 +11,20 @@
 template<class T>class Vdinamico {
 private:
     int tamal,tamaf;
-    int *v;
+    T *v;
 public:
     Vdinamico();
     Vdinamico(const Vdinamico& orig);
     virtual ~Vdinamico();
-    int lee(int pos){ return v[pos]; }
+    T lee(int pos){ return v[pos]; }
     void escribe(int pos, int dato){ v[pos] = dato; }
     void inserta(int dato, unsigned pos);
-    int elimina(unsigned pos);
+    void elimina(unsigned pos);
     void aumenta(int dato); // Inserción por la derecha
     int disminuye(); // Eliminar dato por la derecha
     unsigned tama(){ return tamal; };
     void ordenar();
-    int busca(int dato); 
-    int busquedaBin(int dato);
+    T busca(T dato);
 };
 
 template<class T>
@@ -71,3 +70,24 @@ Vdinamico<T>::disminuye(){
 }
 #endif	/* VDINAMICO_H */
 
+template<class T>
+Vdinamico<T>::elimina(unsigned pos){
+    for(unsigned i=pos;i<tamal;i++){
+        v[i]=v[i+1];
+    }
+    tamal--;
+}
+
+template<class T>
+Vdinamico<T>::ordenar(){
+    
+}
+
+template<class T>
+Vdinamico<T>::busca(T dato){
+    for(int i=0;i==tamal;i++){
+        if(v[i]==dato){
+            return i;
+        }
+    }
+}
