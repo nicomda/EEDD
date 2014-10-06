@@ -19,3 +19,27 @@ Cancion::Cancion(const Cancion& orig) {
 Cancion::~Cancion() {
 }
 
+void Cancion::SetInterprete(std::string _interprete) {
+    this->_interprete = _interprete;
+}
+
+std::string Cancion::GetInterprete() const {
+    return _interprete;
+}
+
+void Cancion::SetTitulo(std::string _titulo) {
+    this->_titulo = _titulo;
+}
+
+std::string Cancion::GetTitulo() const {
+    return _titulo;
+}
+
+void Cancion::SetCodigo(int _codigo) {
+    this->_codigo = _codigo;
+}
+
+int Cancion::GetCodigo() const {
+    return _codigo;
+}
+

@@ -11,7 +11,8 @@
 #define	CANCION_H
 using namespace std;
 class Cancion {
-
+    
+private:
     int _codigo;
     std::string _titulo;
     std::string _interprete;
@@ -20,7 +21,14 @@ public:
 	Cancion (int &codigo, string &titulo, string &interprete);
 	Cancion(const Cancion& orig);
 	virtual ~Cancion();
-private:
+        void SetInterprete(std::string _interprete);
+        std::string GetInterprete() const;
+        void SetTitulo(std::string _titulo);
+        std::string GetTitulo() const;
+        void SetCodigo(int _codigo);
+        int GetCodigo() const;
+        
+
 };
 
 #endif	/* CANCION_H */
