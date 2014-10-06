@@ -18,13 +18,12 @@ public:
     virtual ~Vdinamico();
     T lee(int pos){ return v[pos]; }
     void escribe(int pos, int dato){ v[pos] = dato; }
-    void inserta(int dato, unsigned pos);
+    void inserta(T dato, unsigned pos);
     void elimina(unsigned pos);
-    void aumenta(int dato); // Inserción por la derecha
-    int disminuye(); // Eliminar dato por la derecha
+    void aumenta(T dato); // Inserción por la derecha
+    void disminuye(); // Eliminar dato por la derecha
     unsigned tama(){ return tamal; };
-    void ordenar();
-    T busca(T dato);
+    int busca(T dato);
 };
 
 template<class T>
@@ -33,7 +32,7 @@ Vdinamico<T>::Vdinamico(){
 }
 
 template<class T>
-Vdinamico<T>::inserta(int dato, unsigned pos){
+void Vdinamico<T>::inserta(T dato, unsigned pos){
     if(tamal==tamaf){
     int *vaux;
     vaux= new int[tamaf=tamaf*2];
@@ -45,7 +44,7 @@ Vdinamico<T>::inserta(int dato, unsigned pos){
 }
 
 template<class T>
-Vdinamico<T>::aumenta(int dato){
+void Vdinamico<T>::aumenta(T dato){
     if(tamal==tamaf){
         int *vaux;
         vaux= new int[tamaf=tamaf*2];
@@ -58,7 +57,7 @@ Vdinamico<T>::aumenta(int dato){
 }
 
 template<class T>
-Vdinamico<T>::disminuye(){
+void Vdinamico<T>::disminuye(){
     if (tamal*3<tamaf){
         tamaf=tamaf/2;
         int *vaux = new T[tamaf];
@@ -68,10 +67,9 @@ Vdinamico<T>::disminuye(){
        
     }
 }
-#endif	/* VDINAMICO_H */
 
 template<class T>
-Vdinamico<T>::elimina(unsigned pos){
+void Vdinamico<T>::elimina(unsigned pos){
     for(unsigned i=pos;i<tamal;i++){
         v[i]=v[i+1];
     }
@@ -79,15 +77,11 @@ Vdinamico<T>::elimina(unsigned pos){
 }
 
 template<class T>
-Vdinamico<T>::ordenar(){
-    
-}
-
-template<class T>
-Vdinamico<T>::busca(T dato){
+int Vdinamico<T>::busca(T dato){
     for(int i=0;i==tamal;i++){
         if(v[i]==dato){
             return i;
         }
     }
 }
+#endif	/* VDINAMICO_H */
