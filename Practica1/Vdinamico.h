@@ -9,11 +9,10 @@
 #define	VDINAMICO_H
 
 template<class T>class Vdinamico {
-private:
-    int tamal,tamaf;
+    int tamal, tamaf;
     T *v;
 public:
-    Vdinamico();
+    VectorDim();
     Vdinamico(const Vdinamico& orig);
     virtual ~Vdinamico();
     T lee(int pos){ return v[pos]; }
@@ -27,9 +26,17 @@ public:
 };
 
 template<class T>
-Vdinamico<T>::Vdinamico(){
-    //TODO
+Vdinamico<T>::Vdinamico():tamal(0), tamaf(1) {
+        v = new T[tamaf];
 }
+
+Vdinamico<T>::Vdinamico(const Vdinamico &orig) {
+        v = new T[orig.tamaf];
+        for(int i=0;i<tamaf;i++){
+            v[i]=orig.v[i];
+        }
+    };
+
 
 template<class T>
 void Vdinamico<T>::inserta(T dato, unsigned pos){
@@ -64,7 +71,6 @@ void Vdinamico<T>::disminuye(){
         for(unsigned i=0;i<tamal;i++){
             vaux[i]=v[i];
         };
-       
     }
 }
 
