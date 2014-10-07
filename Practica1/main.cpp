@@ -11,6 +11,8 @@
 #include <sstream>
 #include <istream>
 #include <string>
+#include "Vdinamico.h"
+#include "Cancion.h"
 
 using namespace std;
 
@@ -18,6 +20,13 @@ using namespace std;
  * 
  */
 int main(int argc, char** argv) {
+    //PRUEBA CON ENTEROS
+//    Vdinamico<int> vint;
+//    for(int i=0; i<20000; i++){
+//        vint.aumenta(rand()%100+1);
+//        cout << vint.lee(i);
+//    }
+    Vdinamico<Cancion*> vcancion;
     string cod, titulo, interprete;
     string filename="canciones.txt";
     
@@ -25,14 +34,17 @@ int main(int argc, char** argv) {
    ifstream stream;
    stream.open(filename.c_str());
    while(!stream.eof()) {
-      
       getline(stream,cod,'|');
       getline(stream,titulo,'|');
       getline(stream,interprete,'\n');
-      cout << cod << endl;
-      cout << titulo << endl;
-      cout << interprete << endl;
+      Cancion* cancion=new Cancion(std::stoi(cod),titulo,interprete);
+      vcancion.aumenta(cancion);
+      
    }
+   for (int i=0; i<vcancion.tama();i++){
+      cout << vcancion.lee(i)->GetCodigo() << endl;
+      cout << vcancion.lee(i)->GetTitulo() << endl;
+      cout << vcancion.lee(i)->GetInterprete() << endl;}
     
     
     return 0;

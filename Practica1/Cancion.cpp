@@ -7,13 +7,16 @@
 
 #include "Cancion.h"
 
-Cancion::Cancion(int &codigo, string &titulo, string &interprete): _codigo(0), _titulo(""), _interprete("")  {
+Cancion::Cancion(int codigo, string titulo, string interprete): _codigo(0), _titulo(""), _interprete("")  {
+    SetCodigo(codigo);
+    SetTitulo(titulo);
+    SetInterprete(interprete);
 }
 
 Cancion::Cancion(const Cancion& orig) {
-    _codigo=orig._codigo;
-    _titulo=orig._titulo;
-    _interprete=orig._interprete;
+   SetCodigo(orig._codigo);
+    SetTitulo(orig._titulo);
+    SetInterprete(orig._interprete);
 }
 
 Cancion::~Cancion() {

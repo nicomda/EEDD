@@ -12,7 +12,7 @@ template<class T>class Vdinamico {
     int tamal, tamaf;
     T *v;
 public:
-    VectorDim();
+    Vdinamico();
     Vdinamico(const Vdinamico& orig);
     virtual ~Vdinamico();
     T lee(int pos){ return v[pos]; }
@@ -29,7 +29,7 @@ template<class T>
 Vdinamico<T>::Vdinamico():tamal(0), tamaf(1) {
         v = new T[tamaf];
 }
-
+template<class T>
 Vdinamico<T>::Vdinamico(const Vdinamico &orig) {
         v = new T[orig.tamaf];
         for(int i=0;i<tamaf;i++){
@@ -53,12 +53,12 @@ void Vdinamico<T>::inserta(T dato, unsigned pos){
 template<class T>
 void Vdinamico<T>::aumenta(T dato){
     if(tamal==tamaf){
-        int *vaux;
-        vaux= new int[tamaf=tamaf*2];
-        for(int i=0;i<tamal;i++)
-            vaux[i]=v[i];
+        T *vaux;
+        vaux= new T[tamaf=tamaf*2];
+        for(int i=0;i<tamal;i++){
+            vaux[i]=v[i];}
         delete []v;
-        v=vaux;
+        v=vaux; 
     }
     v[tamal++]=dato;
 }
@@ -90,4 +90,9 @@ int Vdinamico<T>::busca(T dato){
         }
     }
 }
+
+template <class T>
+Vdinamico<T>::~Vdinamico(){
+delete []v;
+};
 #endif	/* VDINAMICO_H */

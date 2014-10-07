@@ -18,7 +18,7 @@ private:
     std::string _interprete;
     
 public:
-	Cancion (int &codigo, string &titulo, string &interprete);
+	Cancion (int codigo, string titulo, string interprete);
 	Cancion(const Cancion& orig);
 	virtual ~Cancion();
         void SetInterprete(std::string _interprete);
