@@ -42,9 +42,8 @@ int main(int argc, char** argv) {
       getline(stream,interprete,'\n');
       Cancion* cancion=new Cancion(aux,titulo,interprete);
       vcancion.aumenta(cancion);
-      cout<< "---Lista de Canciones Actualizada---" << endl;
    }
-   
+      cout<< "---Lista de Canciones Actualizada---" << endl;
    //Crear Vector de peticiones
    Vdinamico <Peticion*> vpeticion;
    int menu=0;
@@ -78,7 +77,7 @@ int main(int argc, char** argv) {
                             }
                             if (existe==false){
                                 Peticion* petic=new Peticion(a);
-                                vpeticion.inserta(petic, vpeticion.tama());
+                                vpeticion.aumenta(petic);
                                 cout << "Cancion introducida en la lista de peticiones." << endl;
                             }   
                         }
@@ -86,6 +85,22 @@ int main(int argc, char** argv) {
                     break;
                     
             case 2: cout << "dos" << endl;
+                    menu=0;
+                    cout << "Pulsa 1 para eliminar la última petición"<<endl;
+                    cout << "Pulsa 2 para eliminar la petición que elijas"<<endl;
+                    cin >> menu;
+                    if (menu==1){
+                        vpeticion.disminuye();
+                    }
+                    else if(menu==2){
+                        cout << "Introduce el numero de petición"<<endl;
+                        int pos=0;
+                        cin >> pos;
+                        vpeticion.elimina(pos);
+                    }
+                    else {
+                        cout<<"Opción errónea"<<endl;
+                    }
                     menu=0;
                     break;
                     
