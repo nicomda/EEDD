@@ -16,7 +16,7 @@ public:
     Vdinamico(const Vdinamico& orig);
     virtual ~Vdinamico();
     T lee(int pos){ return v[pos]; }
-    void escribe(int pos, int dato){ v[pos] = dato; }
+    void escribe(int pos, T dato){ v[pos] = dato; }
     void inserta(T dato, unsigned pos);
     void elimina(unsigned pos);
     void aumenta(T dato); // Inserción por la derecha

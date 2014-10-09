@@ -19,7 +19,11 @@ public:
 	Peticion(int _cod);
 	Peticion(const Peticion& orig);
 	virtual ~Peticion();
-        void AnadePeticion(int _cod);
+        void AnadePeticion();
+        void SetNPetic(int _nPetic);
+        int GetNPetic() const;
+        void SetCod(int _cod);
+        int GetCod() const;
 private:
 
 };

@@ -45,28 +45,64 @@ int main(int argc, char** argv) {
       cout<< "---Lista de Canciones Actualizada---" << endl;
    }
    
+   //Crear Vector de peticiones
    Vdinamico <Peticion*> vpeticion;
    int menu=0;
+   int a;
    do{
         switch(menu){
             
-            case 1: cout << "uno" << endl;
+            case 1: cout << "Indica el codigo de la cancion (1-500)" << endl;
+                    bool existe;
+                    cin >> a;
+                        while(typeid(a)!=typeid(int)) {
+                            cout <<"Entrada erronea" << endl;
+                            cin >> a;
+                        }
+                        if(a<=0 || a>=501){
+                            cout << "Error. Elige una opcion del menú." << endl;
+                            a=0;
+                            menu=1;
+                            break;
+                        }
+                        else{
+                            for (int i=0; i==vpeticion.tama(); i++){
+                                if (vpeticion.lee(i)->GetCod()==a){
+                                    existe=true;
+                                    cout << "Peticion Procesada. Esta cancion tiene " << vpeticion.lee(i)->GetNPetic() << " peticiones." <<endl;
+                                }
+                                else{
+                                    existe=false;
+                                }
+                            }
+                            if (existe==false){
+                                Peticion* petic=new Peticion(a);
+                                vpeticion.inserta(petic, vpeticion.tama());
+                                vpeticion.lee(vpeticion.tama())->AnadePeticion();
+                                cout << "Cancion introducida en la lista de peticiones." << endl;
+                            }   
+                        }
                     menu=0;
                     break;
+                    
             case 2: cout << "dos" << endl;
                     menu=0;
                     break;
+                    
             case 3: menu=3;
                     break;
-            default:
+                    
+            default:menu=0;
                     cout << "**MENU**" << endl;
                     cout << "1-Añadir Peticion" << endl;
                     cout << "2-Eliminar Peticion" << endl;
                     cout << "3-Salir" << endl;
-                    int c=1;
+                    int c;
+                    cin >> c;
                     while(typeid(c)!=typeid(int)) {
-                        cin >> c;}
-                    if(c<=-1 || c>=4){
+                        cin >> c;
+                    }
+                    if(c<=0 || c>=4){
                         cout << "Error. Elige una opcion del menú." << endl;
                     }
                     else{
