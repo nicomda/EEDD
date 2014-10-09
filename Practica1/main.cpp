@@ -48,12 +48,13 @@ int main(int argc, char** argv) {
    //Crear Vector de peticiones
    Vdinamico <Peticion*> vpeticion;
    int menu=0;
-   int a;
+
    do{
         switch(menu){
             
             case 1: cout << "Indica el codigo de la cancion (1-500)" << endl;
                     bool existe;
+                    int a;
                     cin >> a;
                         while(typeid(a)!=typeid(int)) {
                             cout <<"Entrada erronea" << endl;
@@ -61,7 +62,6 @@ int main(int argc, char** argv) {
                         }
                         if(a<=0 || a>=501){
                             cout << "Error. Elige una opcion del menú." << endl;
-                            a=0;
                             menu=1;
                             break;
                         }
@@ -69,6 +69,7 @@ int main(int argc, char** argv) {
                             for (int i=0; i==vpeticion.tama(); i++){
                                 if (vpeticion.lee(i)->GetCod()==a){
                                     existe=true;
+                                    vpeticion.lee(i)->AnadePeticion();
                                     cout << "Peticion Procesada. Esta cancion tiene " << vpeticion.lee(i)->GetNPetic() << " peticiones." <<endl;
                                 }
                                 else{
@@ -78,7 +79,6 @@ int main(int argc, char** argv) {
                             if (existe==false){
                                 Peticion* petic=new Peticion(a);
                                 vpeticion.inserta(petic, vpeticion.tama());
-                                vpeticion.lee(vpeticion.tama())->AnadePeticion();
                                 cout << "Cancion introducida en la lista de peticiones." << endl;
                             }   
                         }
@@ -90,7 +90,7 @@ int main(int argc, char** argv) {
                     break;
                     
             case 3: menu=3;
-                    break;
+                    break;        
                     
             default:menu=0;
                     cout << "**MENU**" << endl;
