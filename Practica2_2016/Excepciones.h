@@ -6,7 +6,7 @@
 
 /* 
  * File:   Excepciones.h
- * Author: Miriam
+ * Author: Miriam y Nico
  *
  * Created on 26 de septiembre de 2016, 23:53
  */
@@ -17,25 +17,18 @@
 
 using namespace std;
 
-class ERR_ENTRADA_DATOS :public exception{
-public:
-	const char* what(){
-		return "Datos de entrada incorrectos";
-	}
-};
-
-class ERR_FUERA_RANGO :public exception{
-public:
+class ERROR_FUERA_RANGO :public exception{
+    public:
 	const char* what(){
 		return "Fuera del rango del vector";
 	}
 };
 
-class ERR_DATOS_INCORRECTOS :public exception{
-public:
-	const char* what(){
-		return "Error en dataset";
-	}
+class ERROR_DATOS_INCORRECTOS :public exception{
+    public:
+        const char* what(){
+            return "Datos de entrada incorrectos";
+        }
 };
 
 

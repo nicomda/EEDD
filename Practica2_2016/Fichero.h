@@ -6,9 +6,9 @@
 
 /* 
  * File:   Fichero.h
- * Author: Miriam
+ * Author: Miriam y Nico
  *
- * Created on 26 de septiembre de 2016, 14:57
+ * Created on 4 de octubre de 2016, 12:02
  */
 
 #ifndef FICHERO_H
@@ -16,7 +16,6 @@
 #include <string>
 #include <iostream>
 using namespace std;
-
 class Fichero {
 public:
     Fichero();
@@ -36,6 +35,4 @@ private:
 };
 
 #endif /* FICHERO_H */
-
-
 

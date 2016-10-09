@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=CLang-MacOSX
 CND_ARTIFACT_DIR_Debug=dist/Debug/CLang-MacOSX
-CND_ARTIFACT_NAME_Debug=practica2
-CND_ARTIFACT_PATH_Debug=dist/Debug/CLang-MacOSX/practica2
+CND_ARTIFACT_NAME_Debug=practica2_2016
+CND_ARTIFACT_PATH_Debug=dist/Debug/CLang-MacOSX/practica2_2016
 CND_PACKAGE_DIR_Debug=dist/Debug/CLang-MacOSX/package
-CND_PACKAGE_NAME_Debug=practica2.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/CLang-MacOSX/package/practica2.tar
+CND_PACKAGE_NAME_Debug=practica22016.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/CLang-MacOSX/package/practica22016.tar
 # Release configuration
 CND_PLATFORM_Release=CLang-MacOSX
 CND_ARTIFACT_DIR_Release=dist/Release/CLang-MacOSX
-CND_ARTIFACT_NAME_Release=practica2
-CND_ARTIFACT_PATH_Release=dist/Release/CLang-MacOSX/practica2
+CND_ARTIFACT_NAME_Release=practica2_2016
+CND_ARTIFACT_PATH_Release=dist/Release/CLang-MacOSX/practica2_2016
 CND_PACKAGE_DIR_Release=dist/Release/CLang-MacOSX/package
-CND_PACKAGE_NAME_Release=practica2.tar
-CND_PACKAGE_PATH_Release=dist/Release/CLang-MacOSX/package/practica2.tar
+CND_PACKAGE_NAME_Release=practica22016.tar
+CND_PACKAGE_PATH_Release=dist/Release/CLang-MacOSX/package/practica22016.tar
 #
 # include compiler specific variables
 #

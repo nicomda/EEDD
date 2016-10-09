@@ -6,9 +6,9 @@
 
 /* 
  * File:   Fichero.cpp
- * Author: Miriam
+ * Author: Miriam y Nico
  * 
- * Created on 26 de septiembre de 2016, 14:57
+ * Created on 4 de octubre de 2016, 12:02
  */
 
 #include "Fichero.h"
@@ -56,5 +56,7 @@ void Fichero::SetNombre(string nombre) {
 string Fichero::GetNombre() const {
     return nombre;
 }
+
+
 
 
