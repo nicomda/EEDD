@@ -103,17 +103,102 @@ VDinamico<Commit> readCommit(string path,VDinamico<Fichero> &ficheros){
     inputStream.close();
     return commits;
 }
+
+Commit searchCommit(string code,VDinamico<Commit> &v_commits){
+    for(int i=0; i<v_commits.tam();i++){
+        if(v_commits[i].GetCodigo()==code){
+            return v_commits[i];
+        }
+      
+    }
+    throw ERROR_CODE_NOT_FOUND();
+}
+
+void listCommitsBetweenDates(double initDate, double endDate, VDinamico<Commit> &commits){
+    for(int i=0;i<commits.tam();i++){
+        if(initDate<stod(commits[i].GetMarcaDeTiempo()) && endDate>stod(commits[i].GetMarcaDeTiempo())){
+            cout << "-----"<<"Coincidencia "<<i<<"---------"<<endl;
+            cout << "Codigo del commit: " << commits[i].GetCodigo()<< endl;
+            cout << "Marca de tiempo: " << commits[i].GetMarcaDeTiempo()<< endl;
+            cout << "Comentario: " << commits[i].GetMensaje() << endl;
+        }
+    }
+}
+
+void listCommitsModifyingFile(string filename,VDinamico<Commit> &commits){
+    for(int i=0;i<commits.tam();i++){
+        for(int j=0;j<commits[i].tam_ficheros();j++){
+            if(filename==commits[i].GetFichero(j)->GetNombre()){
+                cout << "-----"<<"Coincidencia "<<i<<"---------"<<endl;
+                cout << "Codigo del commit: " << commits[i].GetCodigo()<< endl;
+                cout << "Marca de tiempo: " << commits[i].GetMarcaDeTiempo()<< endl;
+                cout << "Comentario: " << commits[i].GetMensaje() << endl;
+            }
+        }
+    }
+}
+
+void printMenu(){
+    cout << "------MENU------"<<endl;
+    cout << "1. Buscar commit por código"<<endl;
+    cout << "2. Buscar entre dos fechas (AñoMesDiaHoraMinutoSegundo)"<<endl;
+    cout << "3. Buscar commits involucrados con un fichero"<<endl;
+    cout << "0. Salir"<<endl;
+    cout << "-----------------"<<endl;
+}
 int main(int argc, char** argv) {
 
     VDinamico<Fichero> v_ficheros;
     VDinamico<Commit> v_commits;
+    Commit commit;
+    string codigo, filename;
+    double fechainicio,fechafin;
+    //CARGA DE FICHEROS EN LA ESTRUCTURA
     v_ficheros=readFichero("ficheros2.txt");
     cout << "ficheros2.txt cargados" << endl;
     v_commits=readCommit("commits.txt",v_ficheros);
     cout << "commits.txt cargado" << endl;
-    for(int i=0;i<10;i++){
-    cout << v_commits[i].GetFichero(0)->GetNombre()<<endl;
-    }
+    
+    int menu_switch_opt=0;
+    do{
+        printMenu();
+        cout << "Selecciona una opción:"<<endl;
+        cin >> menu_switch_opt;
+        switch(menu_switch_opt){
+            //BUSCAR CODIGO
+            case 1:
+                cout << "Introduce Codigo:" << endl;
+                cin >> codigo;
+                cout << "-----------------" << endl;
+                try{
+                    commit=searchCommit(codigo,v_commits);
+                }catch (ERROR_CODE_NOT_FOUND &e){
+                    cerr << "No existe el código" << e.what() << endl;
+                }
+                cout << "Codigo del commit: " << commit.GetCodigo()<< endl;
+                cout << "Marca de tiempo: " << commit.GetMarcaDeTiempo()<< endl;
+                cout << "Comentario: " << commit.GetMensaje() << endl;
+                break;
+            //BUSCAR POR FECHAS
+            case 2:
+                cout << "Fecha Inicio: "<<endl;
+                cin >> fechainicio;
+                cout << "Fecha Fin: "<<endl;
+                cin >> fechafin;
+                listCommitsBetweenDates(fechainicio,fechafin,v_commits);
+                break;
+            case 3:
+                cout << "Nombre de fichero" << endl;
+                cin >> filename;
+                listCommitsModifyingFile(filename,v_commits);
+                break;
+            default:
+                if(menu_switch_opt==0) cout << "Finalizado.";
+                else cout <<"No existe esa opción, introduce un número del menú."<<endl;
+                break;
+        
+        }
+    }while(menu_switch_opt!=0);
     return 0;
     
 }
