@@ -111,7 +111,7 @@ Commit searchCommit(string code,VDinamico<Commit> &v_commits){
         }
       
     }
-    throw ERROR_CODE_NOT_FOUND();
+    throw ERROR_DATA_NOT_FOUND();
 }
 
 void listCommitsBetweenDates(double initDate, double endDate, VDinamico<Commit> &commits){
@@ -123,6 +123,7 @@ void listCommitsBetweenDates(double initDate, double endDate, VDinamico<Commit> 
             cout << "Comentario: " << commits[i].GetMensaje() << endl;
         }
     }
+    throw ERROR_DATA_NOT_FOUND();
 }
 
 void listCommitsModifyingFile(string filename,VDinamico<Commit> &commits){
@@ -136,6 +137,7 @@ void listCommitsModifyingFile(string filename,VDinamico<Commit> &commits){
             }
         }
     }
+    throw ERROR_DATA_NOT_FOUND();
 }
 
 void printMenu(){
@@ -158,7 +160,6 @@ int main(int argc, char** argv) {
     cout << "ficheros2.txt cargados" << endl;
     v_commits=readCommit("commits.txt",v_ficheros);
     cout << "commits.txt cargado" << endl;
-    
     int menu_switch_opt=0;
     do{
         printMenu();
@@ -172,7 +173,7 @@ int main(int argc, char** argv) {
                 cout << "-----------------" << endl;
                 try{
                     commit=searchCommit(codigo,v_commits);
-                }catch (ERROR_CODE_NOT_FOUND &e){
+                }catch (ERROR_DATA_NOT_FOUND &e){
                     cerr << "No existe el código" << e.what() << endl;
                 }
                 cout << "Codigo del commit: " << commit.GetCodigo()<< endl;
@@ -185,15 +186,24 @@ int main(int argc, char** argv) {
                 cin >> fechainicio;
                 cout << "Fecha Fin: "<<endl;
                 cin >> fechafin;
-                listCommitsBetweenDates(fechainicio,fechafin,v_commits);
+                try{
+                    listCommitsBetweenDates(fechainicio,fechafin,v_commits);
+                }catch (ERROR_DATA_NOT_FOUND &e){
+                    cerr << "No existe ningun commit entre las fechas dadas" << e.what() << endl;
+                }
+                
                 break;
             case 3:
                 cout << "Nombre de fichero" << endl;
                 cin >> filename;
-                listCommitsModifyingFile(filename,v_commits);
+                try{
+                    listCommitsModifyingFile(filename,v_commits);
+                }catch (ERROR_DATA_NOT_FOUND &e){
+                    cerr << "No existe ningun commit vinculado a ese archivo" << e.what() << endl;
+                }
                 break;
             default:
-                if(menu_switch_opt==0) cout << "Finalizado.";
+                if(menu_switch_opt==0) cout << "Gracias por usar nuestro software.";
                 else cout <<"No existe esa opción, introduce un número del menú."<<endl;
                 break;
         
