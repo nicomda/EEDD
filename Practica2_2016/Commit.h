@@ -21,18 +21,21 @@ using namespace std;
 class Commit {
 public:
     Commit();
-    Commit(string mcodigo, int mmarcaDeTiempo, string mmensaje, VDinamico <Fichero*> mficheros);
+    Commit(string mcodigo, string mmarcaDeTiempo, string mmensaje, VDinamico <Fichero*> mficheros);
     Commit(const Commit& orig);
     virtual ~Commit();
-	void SetCodigo(string codigo);
-	string GetCodigo() const;
-	void SetMarcaDeTiempo(int marcaDeTiempo);
-	int GetMarcaDeTiempo() const;
-	void SetMensaje(string mensaje);
-	string GetMensaje() const;
+    void SetCodigo(string codigo);
+    string GetCodigo() const;
+    void SetMarcaDeTiempo(string marcaDeTiempo);   
+    string GetMarcaDeTiempo() const;   
+    void SetMensaje(string mensaje);    
+    string GetMensaje() const;
+    void SetFicheros(VDinamico<Fichero*> ficheros);
+    Fichero* GetFichero(int pos);
+    int tam_ficheros();
 private:
     string codigo;
-    int marcaDeTiempo;
+    string marcaDeTiempo;
     string mensaje;
     VDinamico <Fichero*> ficheros;
 };

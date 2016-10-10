@@ -37,7 +37,7 @@ class VDinamico{
         VDinamico<T>& operator=(const VDinamico<T>& orig);
         T& operator[](const unsigned pos);
         void insertar (const T& dato, unsigned pos = UINT_MAX);
-        T borrar(unsigned pos = UINT_MAX);
+        T borrar(unsigned pos);
         unsigned tam();
         ~VDinamico();
         
@@ -178,9 +178,9 @@ T VDinamico<T>::borrar(unsigned pos){
 }
 
 
-/**
 
-T VDinamico<T>::borrar(unsigned pos = UINT_MAX) {
+
+/*T VDinamico<T>::borrar() {
 	T dato;
 	if (pos <= tamL)throw ERROR_FUERA_RANGO();
 	if (pos == UINT_MAX) {
@@ -199,9 +199,8 @@ T VDinamico<T>::borrar(unsigned pos = UINT_MAX) {
 	}
 	return dato;
 
-}
+}*/
 
-*/
 
 
 template <class T>

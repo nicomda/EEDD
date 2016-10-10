@@ -31,5 +31,12 @@ class ERROR_DATOS_INCORRECTOS :public exception{
         }
 };
 
+class ERROR_DATA_NOT_FOUND :public exception{
+    public:
+        const char* what(){
+            return "No se han encontrado registros. ";
+        }
+};
+
 
 #endif
