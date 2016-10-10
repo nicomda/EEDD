@@ -34,7 +34,6 @@ Fichero parseFichero(string fichero){
 }
 
 Commit parseCommit(string toParse, VDinamico<Fichero> &ficheros ){
-    cout << toParse << endl;
     auto pos = toParse.find(';');
     auto codigo = toParse.substr(0, pos);
     toParse=toParse.substr(pos+1,toParse.length());
@@ -45,28 +44,20 @@ Commit parseCommit(string toParse, VDinamico<Fichero> &ficheros ){
     auto comment= toParse.substr(0,pos);
     toParse=toParse.substr(pos+1,toParse.length());
     string references=toParse.substr(0,toParse.length());
-    cout << codigo <<endl;
-    cout << timestamp << endl;
-    cout << comment << endl;
-    cout << references<<endl;
     VDinamico<Fichero *> referencias_ficheros;
     Fichero* referencia;
     string split1,split2;
     int casted;
     while(references.find(',')!=string::npos){
-        //referencia=&ficheros[stoi(references.substr(0,pos))];
         pos=references.find(',');
         split1=references.substr(0,pos);
-        cout << split1 << endl;
         casted=stoi(split1);
         split2=references.substr(pos+1,references.length());
         references=split2;
         referencias_ficheros.insertar(&ficheros[casted],referencias_ficheros.tam());
     }
     casted=stoi(references);
-    cout << casted << endl;
     referencias_ficheros.insertar(&ficheros[casted],referencias_ficheros.tam());
-    //referencias_ficheros[1]->GetNombre();
     return Commit(codigo,timestamp,comment,referencias_ficheros);
 }
 
@@ -102,7 +93,7 @@ VDinamico<Commit> readCommit(string path,VDinamico<Fichero> &ficheros){
         getline(inputStream,toParse);
         while (!inputStream.eof()) {
             getline(inputStream,toParse);
-            commits.insertar(parseCommit(toParse,ficheros));
+            commits.insertar(parseCommit(toParse,ficheros),commits.tam());
         }
     }catch(ifstream::failure &e){
         cerr << "Excepcion leyendo de fichero: " << e.what() << endl;
@@ -117,12 +108,12 @@ int main(int argc, char** argv) {
     VDinamico<Fichero> v_ficheros;
     VDinamico<Commit> v_commits;
     v_ficheros=readFichero("ficheros2.txt");
-//    for(int i=0;i<10;i++){
-//        cout << v_ficheros[i].GetNombre() << endl;
-//    }
-    
+    cout << "ficheros2.txt cargados" << endl;
     v_commits=readCommit("commits.txt",v_ficheros);
-    
+    cout << "commits.txt cargado" << endl;
+    for(int i=0;i<10;i++){
+    cout << v_commits[i].GetFichero(0)->GetNombre()<<endl;
+    }
     return 0;
     
 }
