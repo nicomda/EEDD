@@ -33,6 +33,43 @@ Fichero parseFichero(string fichero){
     return Fichero(nombre,ubicacion,tamaBytes);
 }
 
+Commit parseCommit(string toParse, VDinamico<Fichero> &ficheros ){
+    cout << toParse << endl;
+    auto pos = toParse.find(';');
+    auto codigo = toParse.substr(0, pos);
+    toParse=toParse.substr(pos+1,toParse.length());
+    pos=toParse.find(';');
+    auto timestamp=toParse.substr(0,pos);
+    toParse=toParse.substr(pos+1,toParse.length());
+    pos=toParse.find(';');
+    auto comment= toParse.substr(0,pos);
+    toParse=toParse.substr(pos+1,toParse.length());
+    string references=toParse.substr(0,toParse.length());
+    cout << codigo <<endl;
+    cout << timestamp << endl;
+    cout << comment << endl;
+    cout << references<<endl;
+    VDinamico<Fichero *> referencias_ficheros;
+    Fichero* referencia;
+    string split1,split2;
+    int casted;
+    while(references.find(',')!=string::npos){
+        //referencia=&ficheros[stoi(references.substr(0,pos))];
+        pos=references.find(',');
+        split1=references.substr(0,pos);
+        cout << split1 << endl;
+        casted=stoi(split1);
+        split2=references.substr(pos+1,references.length());
+        references=split2;
+        referencias_ficheros.insertar(&ficheros[casted],referencias_ficheros.tam());
+    }
+    casted=stoi(references);
+    cout << casted << endl;
+    referencias_ficheros.insertar(&ficheros[casted],referencias_ficheros.tam());
+    //referencias_ficheros[1]->GetNombre();
+    return Commit(codigo,timestamp,comment,referencias_ficheros);
+}
+
 VDinamico<Fichero> readFichero(string path){
     ifstream inputStream;
     string toParse;
@@ -55,16 +92,38 @@ VDinamico<Fichero> readFichero(string path){
     return ficheros;
 }
 
+VDinamico<Commit> readCommit(string path,VDinamico<Fichero> &ficheros){
+    ifstream inputStream;
+    string toParse;
+    VDinamico<Commit> commits;
+    try{
+	inputStream.open(path);
+        //Para quitar cabecera del fichero
+        getline(inputStream,toParse);
+        while (!inputStream.eof()) {
+            getline(inputStream,toParse);
+            commits.insertar(parseCommit(toParse,ficheros));
+        }
+    }catch(ifstream::failure &e){
+        cerr << "Excepcion leyendo de fichero: " << e.what() << endl;
+    }catch(ERROR_FUERA_RANGO& e){
+        cerr << "Excepcion en el vector dinámico" << e.what() << endl;
+    }
+    inputStream.close();
+    return commits;
+}
 int main(int argc, char** argv) {
 
-    VDinamico<Fichero> ficheros;
-    ficheros=readFichero("ficheros2.txt");
-    for(int i=0;i<10;i++){
-        cout << ficheros[i].GetNombre() << endl;
-    }
-
-	
+    VDinamico<Fichero> v_ficheros;
+    VDinamico<Commit> v_commits;
+    v_ficheros=readFichero("ficheros2.txt");
+//    for(int i=0;i<10;i++){
+//        cout << v_ficheros[i].GetNombre() << endl;
+//    }
+    
+    v_commits=readCommit("commits.txt",v_ficheros);
+    
     return 0;
-        
+    
 }
 
