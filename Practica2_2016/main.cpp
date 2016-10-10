@@ -143,7 +143,7 @@ void listCommitsModifyingFile(string filename,VDinamico<Commit> &commits){
 void printMenu(){
     cout << "------MENU------"<<endl;
     cout << "1. Buscar commit por código"<<endl;
-    cout << "2. Buscar entre dos fechas (AñoMesDiaHoraMinutoSegundo)"<<endl;
+    cout << "2. Buscar entre dos fechas"<<endl;
     cout << "3. Buscar commits involucrados con un fichero"<<endl;
     cout << "0. Salir"<<endl;
     cout << "-----------------"<<endl;
@@ -182,6 +182,7 @@ int main(int argc, char** argv) {
                 break;
             //BUSCAR POR FECHAS
             case 2:
+                cout << "Formato de fecha (AñoMesDiaHoraMinutoSegundo)" << endl;
                 cout << "Fecha Inicio: "<<endl;
                 cin >> fechainicio;
                 cout << "Fecha Fin: "<<endl;
