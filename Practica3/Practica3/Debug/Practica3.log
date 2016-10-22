@@ -1,0 +1,105 @@
+﻿  Lista.cpp
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\lista.cpp(12): error C2660: 'ListaDEnlazada<int>::iteradorFinal': la función no acepta 1 argumentos
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\lista.cpp(17): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=int
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\lista.cpp(22): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=int
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\lista.cpp(25): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=int
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\lista.cpp(31): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=int
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\lista.cpp(41): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=int
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\lista.cpp(53): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=int
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\lista.cpp(57): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=int
+          ]
+  GitCode.cpp
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\gitcode.cpp(22): error C3867: 'Iterador<T>::existe': sintaxis no estándar; utilice '&' para crear un puntero al miembro
+          with
+          [
+              T=Commit
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\gitcode.cpp(27): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=Commit
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\gitcode.cpp(40): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=Commit
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\gitcode.cpp(56): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=Fichero
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\gitcode.cpp(63): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=Commit
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\gitcode.cpp(84): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=Commit
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\gitcode.cpp(142): error C2661: 'Commit::Commit': ninguna función sobrecargada acepta 3 argumentos
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\gitcode.cpp(149): warning C4018: '<': no coinciden signed/unsigned
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\gitcode.cpp(156): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=Fichero
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\gitcode.cpp(171): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=Fichero
+          ]
+  Fichero.cpp
+  Fecha.cpp
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\fecha.cpp(15): error C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\time.h(505): note: vea la declaración de 'localtime'
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\fecha.cpp(158): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: vea la declaración de 'sprintf'
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\fecha.cpp(165): error C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: vea la declaración de 'sprintf'
+  Commit.cpp
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\commit.cpp(73): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=Fichero *
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\commit.cpp(85): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=Fichero *
+          ]
+c:\users\miriam\documents\github\edd\eedd\estructuradedatos\practica3\practica3\commit.cpp(97): error C2676: '++' binario: 'Iterador<T>' no define este operador o una conversión a un tipo aceptable para el operador predefinido
+          with
+          [
+              T=Fichero *
+          ]
+  Generando código...
