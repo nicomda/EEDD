@@ -8,27 +8,27 @@ void main() {
 	int g = 444;
 
 	ListaDEnlazada<int> listaEnteros;
-	for (int i = 0; i < 100; i++) {
+	for (int k = 0; k < 100; k++) {
 		listaEnteros.iteradorFinal(i);
 	}
 	Iterador<int> i = listaEnteros.iteradorInicio();
 	while (i.existe()) {
 		cout << i.getDato() << "-";
-		i++;
+		i.siguiente();
 	}
 	cout << endl;
 	i = listaEnteros.iteradorInicio();
 
-	for (int j = 0; j < 50; j++)i++;
+	for (int j = 0; j < 50; j++)i.siguiente();
 	listaEnteros.insertar(i, l);
 	i = listaEnteros.iteradorInicio();
-	for (int j = 0; j < 80; j++)i++;
+	for (int j = 0; j < 80; j++)i.siguiente();
 	listaEnteros.insertar(i, g);
 	i = listaEnteros.iteradorInicio();
 	cout << endl;
 	while (i.existe()) {
 		cout << i.getDato() << "-";
-		i++;
+		i.siguiente();
 	}
 
 	listaEnteros.borrarInicio();
@@ -38,7 +38,7 @@ void main() {
 	cout << endl;
 	while (i.existe()) {
 		cout << i.getDato() << "-";
-		i++;
+		i.siguiente();
 	}
 
 	listaEnteros.borrarFinal();
@@ -50,11 +50,11 @@ void main() {
 	cout << endl;
 	while (i.existe()) {
 		cout << i.getDato() << "-";
-		i++;
+		i.siguiente();
 	}
 
 	i = listaEnteros.iteradorInicio();
-	for (int j = 0; j < 25; j++)i++;
+	for (int j = 0; j < 25; j++)i.siguiente();
 	listaEnteros.borrar(i);
 
 	i = listaEnteros.iteradorInicio();

@@ -17,12 +17,14 @@ class Iterador {
 		bool existe();
 		bool hayAnterior();
 		bool haySiguiente();
-		Nodo<T> *anterior();
-		Nodo<T> *siguiente();
+		//Nodo<T> *anterior();
+		//Nodo<T> *siguiente();
+		void anterior() { nodo = nodo->ant; }
+		void siguiente() { nodo = nodo->sig; }
 		T &getDato();
 		Nodo<T> *getNodo();
-		Iterador<T> &operator++();
-		Iterador<T> &operator--();
+		//Iterador<T> &operator++();
+		//Iterador<T> &operator--();
 		bool operator==(Iterador<T> &i);
 		bool operator!=(Iterador<T> &i);
 		~Iterador();
@@ -58,7 +60,7 @@ bool Iterador<T>::haySiguiente() {
 	return nodo->getSiguiente() != 0;
 }
 
-template <class T>
+/*template <class T>
 Nodo<T>* Iterador<T>::anterior() {
 	return nodo->getAnterior();
 }
@@ -67,12 +69,12 @@ template <class T>
 Nodo<T>* Iterador<T>::siguiente() {
 	return nodo->getSiguiente();
 }
-
+*/
 template <class T>
 T &Iterador<T>::getDato() {
 	return nodo->getDato();
 }
-
+/*
 template <class T>
 Iterador<T> &Iterador<T>::operator++() {
 	nodo = nodo->getSiguiente();
@@ -84,7 +86,7 @@ Iterador<T> &Iterador<T>::operator--() {
 	nodo = nodo->getAnterior();
 	return *this;
 }
-
+*/
 template <class T>
 bool Iterador<T>::operator==(Iterador<T> &i) {
 	return nodo == i.nodo;

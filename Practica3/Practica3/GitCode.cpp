@@ -24,7 +24,7 @@ bool GitCode::getCommit(string code, Commit &commit) {
 			commit = i.getDato();
 			return true;
 		} else {
-			i++;
+			i.siguiente();
 		}
 	}
 	return false;
@@ -35,9 +35,9 @@ VDinamico<Commit> GitCode::getCommFechas(Fecha f1, Fecha f2){
 	Iterador <Commit> i = commits.iteradorInicio();
 	while (i.existe()) {
 		if (i.getDato().entreFechas(f1, f2)){
-			vCommits.insertar(i.getDato(), UINT_MAX);
+			vCommits.insertar(i.getDato(), UINTMAX_MAX);
 		}
-		i++;
+		i.siguiente();
 	}
 	return vCommits;
 }
@@ -53,17 +53,17 @@ VDinamico<Commit> GitCode::getCommFichero(string nombre) {
 			encontrado = true;
 		}
 		else {
-			j++;
+			j.siguiente();
 			cod++;
 		}
 	}
 
 	int k = 1;
 	while (i.existe() && k < cod) {
-		i++;
+		i.siguiente();
 	}
 	if (i.getDato().incluyeFichero(nombre)) {
-		vCommits.insertar(i.getDato(), UINT_MAX);
+		vCommits.insertar(i.getDato(), UINTMAX_MAX);
 	}
 	return vCommits;
 }
@@ -81,7 +81,7 @@ void GitCode::eliminarFichero(string nombre) {
 		Iterador<Commit> i = commits.iteradorInicio();
 		while (i.existe()) {
 			i.getDato().borrarFichero(nombre);
-			i++;
+			i.siguiente();
 		}
 		ficheros.borrar(j);
 	}
@@ -132,14 +132,14 @@ void GitCode::cargaDeCommit(string fileCommi) {
 		getline(inputStream, lineaActual);
 		//parseamos la linea
 		auto pos = lineaActual.find(';');
-		auto cod = lineaActual.substr(0, pos);
+		auto codi = lineaActual.substr(0, pos);
 		auto marcatiempo = lineaActual.substr(pos + 1, 14);
 		pos += 16;
 		auto mensaje = lineaActual.substr(pos, lineaActual.length());
 		pos = mensaje.find(';');
 		auto mensajes = mensaje.substr(0, pos);
 		auto numFicheros = mensaje.substr(pos + 1, mensaje.length());
-		Commit commit(cod, marcatiempo, mensajes);
+		Commit commit(codi, marcatiempo, mensajes);
 
 		//separamos los ficheros por comas
 		int tamFin = numFicheros.length();
@@ -153,7 +153,7 @@ void GitCode::cargaDeCommit(string fileCommi) {
 			int j = 0;
 			while (j < posF) {
 				j++;
-				i++;
+				i.siguiente();
 			}
 			commit.addfichero(&i.getDato());
 			inicio = pos + 1;
@@ -168,7 +168,7 @@ void GitCode::cargaDeCommit(string fileCommi) {
 		int j = 0;
 		while (j < posF) {
 			j++;
-			i++;
+			i.siguiente();
 		}
 		commit.addfichero(&i.getDato());
 		commits.insertarFinal(commit);

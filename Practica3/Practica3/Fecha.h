@@ -16,12 +16,12 @@ public:
 /** @brief Clases sencilla para representar fechas y horas */
 class Fecha {
 	/** Fecha y hora */
-	unsigned dia, mes, anio, hora, min;
+	unsigned dia, mes, anio, hora, min, seg;
 	/** Dias por mes */
 	static const unsigned diasMes[12];
 
 	/** Comprobación de validez de una fecha */
-	void comprobarFecha(unsigned aDia, unsigned aMes, unsigned aAnio, unsigned aHora, unsigned aMin) const;
+	void comprobarFecha(unsigned aAnio, unsigned aMes, unsigned aDia, unsigned aHora, unsigned aMin, unsigned aSeg) const;
 	/** Función auxiliar de conversión desde estructura de tiempo tm de time.h */
 	void leerTiempo(const tm &t);
 	/** Función	auxiliar de conversión a estructura de tiempo tm de time.h */
@@ -31,26 +31,30 @@ public:
 	/** Crea una fecha con la hora actual */
 	Fecha();
 	/** Crea una fecha concreta. Devuelve una excepción ErrorFechaIncorrecta si la fecha introducida no es correcta */
-	Fecha(unsigned aDia, unsigned aMes, unsigned aAnio, unsigned aHora = 0, unsigned aMin = 0);
+	Fecha(unsigned aAnio, unsigned aMes, unsigned aDia, unsigned aHora = 0, unsigned aMin = 0, unsigned aSeg = 0);
 	/** Constructor copia */
 	Fecha(const Fecha &f) :
-		dia(f.dia), mes(f.mes), anio(f.anio), hora(f.hora), min(f.min) {}
+		anio(f.anio), mes(f.mes), dia(f.dia), hora(f.hora), min(f.min), seg(f.seg) {}
 
 	/** Asignar un nuevo día */
-	void asignarDia(unsigned aDia, unsigned aMes, unsigned aAnio);
+	void asignarDia(unsigned aAnio, unsigned aMes, unsigned aDia);
 	/** Asignar una nueva hora */
-	void asignarHora(unsigned aHora, unsigned aMin);
+	void asignarHora(unsigned aHora, unsigned aMin, unsigned aSeg);
 
 	/** Obtener hora */
 	unsigned verHora() const { return hora; }
 	/** Obtener minutos */
 	unsigned verMin() const { return min; }
-	/** Obtener dia */
-	unsigned verDia() const { return dia; }
-	/** Obtener mes */
-	unsigned verMes() const { return mes; }
+	/** Obtener segundos */
+	unsigned verSeg() const { return seg; }
 	/** Obtener año */
 	unsigned verAnio() const { return anio; }
+	/** Obtener mes */
+	unsigned verMes() const { return mes; }
+	/** Obtener dia */
+	unsigned verDia() const { return dia; }
+
+	
 
 	/** Obtener una cadena con el día */
 	string cadenaDia() const;
@@ -71,6 +75,8 @@ public:
 	/** Asignar fechas */
 	Fecha &operator=(const Fecha &f);
 
+	/** Añadir un número de segundos indicado */
+	void anadirSeg(int numSeg);
 	/** Añadir un número de minutos indicado */
 	void anadirMin(int numMin);
 	/** Añadir un número de horas indicado*/

@@ -14,6 +14,7 @@ class Commit {
 public:
 	//creamos los constructores por defecto, parametros, copia y destructor de la clase.
 	Commit();
+	Commit(string mcodigo, string mmarcaDeTiempo, string mmensaje);
 	Commit(string mcodigo, string mmarcaDeTiempo, string mmensaje, VDinamico <Fichero*> mficheros);
 	Commit(const Commit& orig);
 	virtual ~Commit();
