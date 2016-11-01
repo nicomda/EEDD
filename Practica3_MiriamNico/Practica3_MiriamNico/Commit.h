@@ -15,18 +15,21 @@ using namespace std;
 class Commit {
 
 private:
-	//creamos las variables y el vector de punteros a la clase fichero.
+	//creamos las variables.
 	string codigo;
 	string marcaDeTiempo;
 	string mensaje;
+	//Creamos una fecha
 	Fecha fecha;
+	//Creamos una lista de ficheros.
 	ListaDEnlazada<Fichero*> ficherosMod;
 
 public:
-	//creamos los constructores por defecto, parametros, copia y destructor de la clase.
-	Commit();
-	Commit(string mcodigo, string mmarcaDeTiempo, string mmensaje);
-	Commit(const Commit& orig);
+	//Creamos los constructores de la clase.
+	Commit(); //Por defecto
+	Commit(string mcodigo, string mmarcaDeTiempo, string mmensaje); //Por parametros
+	Commit(const Commit& orig); //Por copia
+	//Creamos el destructor de la clase.
 	virtual ~Commit();
 	//creamos los gets y los sets de la clase.
 	void SetCodigo(string mcodigo) { this->codigo = mcodigo; }
@@ -35,13 +38,15 @@ public:
 	string GetMarcaDeTiempo() const { return marcaDeTiempo; }
 	void SetMensaje(string mmensaje) { this->mensaje = mmensaje; }
 	string GetMensaje() const { return mensaje; }
-
-	//creamos metodos adicionales para trabajar con los ficheros.
+	//Creamos un metodo para que nos devuelva la fecha.
 	Fecha& getFecha() { return fecha; };
+	//creamos metodos adicionales para trabajar con los ficheros.
 	void addFichero(Fichero* fich);
 	bool incluyeFichero(string mnombre);
 	bool borrarFichero(string mnombre);
+	//Creamos un metodo para decir si existen fechas entre dos fechas dadas.
 	bool entreFechas(Fecha finicio, Fecha ffin);
+	//Guardamos en el vector los ficheros.
 	VDinamico<Fichero*> getFicheros();
 };
 

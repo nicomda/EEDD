@@ -13,7 +13,7 @@ using namespace std;
 
 //en esta función imprimimos el menu de opciones para buscar commits por codigo, por rango de fechas o
 //si incluye algun fichero modificado y en cuantros commits se encuentra.
-void printMenu() {
+/*void printMenu() {
 	cout << "----------------------------MENU---------------------------------------" << endl;
 	cout << "1. Buscar Commit por codigo" << endl;
 	cout << "2. Buscar Commits entre dos fechas" << endl;
@@ -21,12 +21,12 @@ void printMenu() {
 	cout << "4. Eliminar un fichero y sus referencias de un/varios Commit/s." << endl;
 	cout << "0. Salir" << endl;
 	cout << "-----------------------------------------------------------------------" << endl;
-}
+}*/
 
 int main(int argc, char** argv) {
 	try {
 		GitCode git("ficheros2.txt", "commits.txt");
-		cout << "Introduce el código de un Commit: " << endl;
+		cout << "Introduce el codigo de un Commit: " << endl;
 		string codigo;
 		cin >> codigo;
 
@@ -41,7 +41,7 @@ int main(int argc, char** argv) {
 			cout << "El commit con codigo: " << codigo << " se ha encontrado y es: " << commits.GetMensaje() << endl;
 		}
 
-		cout << "Cargando------------------------------------------------------------------------------------" << endl;
+		cout << "Cargando------------------------------------------------------------" << endl;
 		cout << "Introduzca una fecha de inicio (con formato: (yyyymmddhhmmss)): " << endl;
 		string fechaInicio, fechaFin;
 		cin >> fechaInicio;
@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
 			cout << commitFechas[i]->GetMensaje() << endl;
 		}
 		string nombreFichero;
-		cout << "Cargando------------------------------------------------------------------------------------" << endl;
+		cout << "Cargando-------------------------------------------------------------" << endl;
 		cout << "Introduzca el nombre del fichero que quiere ver si ha sido modificado: " << endl;
 		cin >> nombreFichero;
 		VDinamico<Commit*> commitFicheroMod;
