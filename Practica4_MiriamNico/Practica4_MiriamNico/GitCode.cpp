@@ -13,17 +13,8 @@ GitCode::GitCode(const GitCode& orig) : fileFichero(orig.fileFichero), fileCommi
 }
 
 GitCode::~GitCode() {
-	list<Commit>::iterator icommit;
-	icommit = commits.begin();
-	while (icommit != commits.end()) {
-		commits.erase(icommit);
-		icommit = commits.begin();
-	}
-	vector<Fichero>::iterator ificheros;
-	while (ificheros != ficheros.end()) {
-		ficheros.erase(ificheros);
-		ificheros = ficheros.begin();
-	}
+	commits.clear();
+	ficheros.clear();
 }
 
 void GitCode::cargarFichero(string mfileFichero) {

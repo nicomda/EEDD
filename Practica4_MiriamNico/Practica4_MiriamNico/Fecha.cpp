@@ -10,9 +10,9 @@ Fecha::Fecha()
 	struct tm *fechaActual;
 
 	time(&tiempoActual); // Obtener hora actual
-	fechaActual = localtime(&tiempoActual); // Decodificar la hora en campos separados
+	//fechaActual = localtime(&tiempoActual); // Decodificar la hora en campos separados
 
-	leerTiempo(*fechaActual);
+	//leerTiempo(*fechaActual);
 }
 
 Fecha::Fecha(unsigned aAnio, unsigned aMes, unsigned aDia, unsigned aHora, unsigned aMin, unsigned aSeg) {
@@ -119,7 +119,7 @@ void Fecha::anadirAnios(int numAnios)
 string Fecha::cadenaDia() const
 {
 	char buffer[11];
-	sprintf(buffer, "%u/%u/%u", anio, mes, dia);
+	//sprintf(buffer, "%u/%u/%u", anio, mes, dia);
 	return string(buffer);
 }
 
@@ -127,7 +127,7 @@ string Fecha::cadenaDia() const
 string Fecha::cadenaHora() const
 {
 	char buffer[6];
-	sprintf(buffer, "%u:%u:%u", hora, min, seg);
+	//sprintf(buffer, "%u:%u:%u", hora, min, seg);
 	return string(buffer);
 }
 

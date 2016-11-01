@@ -13,7 +13,7 @@ using namespace std;
 int main(int argc, char** argv) {
 	try {
 		GitCode git("ficheros2.txt", "commits.txt");
-		cout << "Introduce el código de un Commit: " << endl;
+		cout << "Introduce el codigo de un Commit: " << endl;
 		string codigo;
 		cin >> codigo;
 
