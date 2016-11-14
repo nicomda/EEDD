@@ -10,6 +10,9 @@ class ABB {
 private:
 	Nodo<T>* raiz;
 	unsigned numElementos;
+	bool eliminar1(Nodo<T>* mnodo);
+	bool eliminar2(Nodo<T>* mnodo);
+	bool eliminar3(Nodo<T>* mnodo);
 public:
 	ABB() { raiz = NULL; numElementos = 0; }
 	ABB(Nodo<T>* mraiz, unsigned mnumElementos) { raiz = mraiz; numElementos = mnumElementos; }
@@ -26,11 +29,11 @@ public:
 	bool insertar(T& mdato);
 	Nodo<T>* menorDescendiente(Nodo<T> *mnodo);
 	Nodo<T>* buscarMinimo(Nodo<T> *mnodo);
-	bool eliminar(T& mdato);
+	bool eliminar(Nodo<T>* mnodo);
 	int altura(T& mdato);
 	int alturaTotal(Nodo<T>* mnodo);
 	int numHojas(Nodo<T>* mnodo);
-
+	Nodo<T>* recorrerIzquierda(Nodo<T>* mnodo);
 };
 template<class T>
 bool ABB<T>::buscar(T& mdato) {
@@ -115,7 +118,7 @@ Nodo<T>* ABB<T>::buscarMinimo(Nodo<T> *mnodo) {
 	return mnodo;
 }
 
-
+/*
 template<class T>
 bool ABB<T>::eliminar(T& mdato) {
 	Nodo<T>* mnodo;
@@ -161,6 +164,7 @@ bool ABB<T>::eliminar(T& mdato) {
 	}
 }
 
+*/
 template <class T>
 int ABB<T>::altura(T& mdato) {
 	Nodo<T>* nodo;
@@ -222,5 +226,148 @@ int ABB<T>::numHojas(Nodo<T>* mnodo) {
 
 }
 
+
+template <class T>
+bool ABB<T>::eliminar(Nodo<T>* mnodo) {
+	bool tieneNodoDerecha;
+	bool tieneNodoIzquierda;
+	/* Creamos variables para saber si tiene hijos izquierdo y derecho */
+	
+	if (mnodo.getDerecha()!= NULL) {
+		tieneNodoDerecha = true;
+	}
+	else {
+		tieneNodoDerecha = false;
+	}
+
+	if (mnodo.getIzquierda() != NULL) {
+		tieneNodoIzquierda = true;
+	}
+	else {
+		tieneNodoIzquierda = false;
+	}
+
+	/* Verificamos los 3 casos diferentes y llamamos a la función correspondiente */
+
+	/* Caso 1: No tiene hijos */
+	if (!tieneNodoDerecha && !tieneNodoIzquierda) {
+		return eliminar1(mnodo);
+	}
+
+	/* Caso 2: Tiene un hijo y el otro no */
+	if (tieneNodoDerecha && !tieneNodoIzquierda) {
+		return eliminar2(mnodo);
+	}
+
+	/* Caso 2: Tiene un hijo y el otro no */
+	if (!tieneNodoDerecha && tieneNodoIzquierda) {
+		return eliminar2(mnodo);
+	}
+
+	/* Caso 3: Tiene ambos hijos */
+	if (tieneNodoDerecha && tieneNodoIzquierda) {
+		return eliminar3(mnodo);
+	}
+
+	return false;
+}
+
+template <class T>
+bool ABB<T>::eliminar1(Nodo<T>* mnodo) {
+	/* lo único que hay que hacer es borrar el nodo y establecer el apuntador de su padre a nulo */
+
+	/*
+	* Guardemos los hijos del padre temporalmente para saber cuál de sus hijos hay que
+	* eliminar
+	*/
+	Nodo<T>* hijoIzquierdo = mnodo.getDato().getIzquierda();
+	Nodo<T>* hijoDerecho = mnodo.getDato().getDerecha();
+
+	if (hijoIzquierdo == mnodo) {
+		mnodo.getDato().setIzquierda(NULL);
+		return true;
+	}
+
+	if (hijoDerecho == mnodo) {
+		nodo.getDato().setDerecha(NULL);
+		return true;
+	}
+
+	return false;
+}
+
+template <class T>
+bool ABB<T>::eliminar2(Nodo<T>* mnodo) {
+	/* Borrar el Nodo y el subárbol que tenía pasa a ocupar su lugar */
+
+	/*
+	* Guardemos los hijos del padre temporalmente para saber cuál de sus hijos hay que
+	* eliminar
+	*/
+	Nodo<T>* hijoIzquierdo = mnodo.getDato().getIzquierda();
+	Nodo<T>* hijoDerecho = mnodo.getDato().getDerecha();
+
+	/*
+	* Buscamos el hijo existente del nodo que queremos eliminar
+	*/
+	Nodo<T>* hijoActual;
+	if (mnodo.getIzquierda() != null) {
+		hijoActual = mnodo.getIzquierda();
+	}
+	else {
+		hijoActual = mnodo.getDerecha();
+	}
+		
+
+	if (hijoIzquierdo == mnodo) {
+		mnodo.getDato().setIzquierda(hijoActual);
+
+		/* Eliminando todas las referencias hacia el nodo */
+		hijoActual.setDato(mnodo.getDato());
+		mnodo.setDerecha(NULL);
+		mnodo.setIzquierda(NULL);
+
+		return true;
+	}
+
+	if (hijoDerecho == mnodo) {
+		mnodo.getDato().setDerecha(hijoActual);
+
+		/* Eliminando todas las referencias hacia el nodo */
+		hijoActual.setDato(mnodo.getDato());
+		mnodo.setDerecha(NULL);
+		mnodo.setIzquierda(NULL);
+
+		return true;
+	}
+
+	return false;
+}
+
+template <class T>
+bool ABB<T>::eliminar3(Nodo<T>* mnodo) {
+	/* Tomar el hijo derecho del Nodo que queremos eliminar */
+	Nodo<T>* nodoMasALaIzquierda = recorrerIzquierda(mnodo.getDerecha());
+	if (nodoMasALaIzquierda != NULL) {
+		/*
+		* Reemplazamos el valor del nodo que queremos eliminar por el nodo que encontramos
+		*/
+		mnodo.setDato(nodoMasALaIzquierda.getDato());
+		/*
+		* Eliminar este nodo de las formas que conocemos ( caso 1, caso 2 )
+		*/
+		removeNodo(nodoMasALaIzquierda);
+		return true;
+	}
+	return false;
+}
+
+template <class T>
+Nodo<T>* ABB<T>::recorrerIzquierda(Nodo<T>* mnodo) {
+	if (mnodo.getIzquierda() != NULL) {
+		return recorrerIzquierda(mnodo.getIzquierda());
+	}
+	return mnodo;
+}
 
 #endif // !ABB_H

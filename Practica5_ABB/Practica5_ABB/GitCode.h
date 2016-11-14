@@ -20,8 +20,11 @@ private:
 		public:
 			string codCommit;
 			list<Commit>::iterator itc;
+			RefCommit() { codCommit = ""; }
 			RefCommit(const string &cod, const list<Commit>::iterator &it): codCommit(cod), itc(it) {}
 			RefCommit(const RefCommit &orig): codCommit(orig.codCommit), itc(orig.itc) {}
+			string getCodCommit() { return codCommit; }
+			void setCodCommit(string mcodCommit) { codCommit = mcodCommit; }
 			/**Compara los iteradores por el código del Commit al que hacen referencia*/
 			bool operator< (const RefCommit &rc) const {return codCommit < rc.codCommit;}
 			//Otros operadores de comparación necesarios...
@@ -43,7 +46,7 @@ private:
 
 public:
 	//Creamos constructores de la clase:
-	GitCode() :fileFichero(" "), fileCommits(" "), commits(), ficheros() {}; //Por defecto
+	GitCode() :fileFichero(" "), fileCommits(" "), commits(), ficheros(), commitsPorClave() {}; //Por defecto
 	GitCode(string mfileFichero, string mfileCommits); //Por parametros
 	GitCode(const GitCode& orig); //Por copia
 	//Creamos el destructor de la clase.

@@ -175,7 +175,6 @@ void GitCode::eliminarFichero(string mnombre) {
 }
 
 void GitCode::nuevoCommit(RefCommit commit){
-
 	if (commitsPorClave.buscar(commit)) throw ERROR_DATO_YA_INSERTADO();
 	else {
 		commitsPorClave.insertar(commit);
@@ -184,7 +183,7 @@ void GitCode::nuevoCommit(RefCommit commit){
 }
 
 bool GitCode::borrarCommit(string commit){
-	//hay que arreglar la función de eliminar antes.
+
 }
 
 string GitCode::getStatus(){
