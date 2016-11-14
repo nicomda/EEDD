@@ -31,7 +31,6 @@ private:
 	};
 
 	ABB<RefCommit> commitsPorClave;
-
 	string fileFichero;
 	string fileCommits;
 	//Creamos la lista de commits
@@ -56,5 +55,9 @@ public:
 	vector<Commit*> getCommitFichero(string mnombre); //Para obtener commits que contienen un fichero.
 	//Creamos la funcion para eliminar ficheros contenidos en un Commit.
 	void eliminarFichero(string mnombre);
+
+	void nuevoCommit(RefCommit commit);
+	bool borrarCommit(string commit);
+	string getStatus();
 };
 #endif // !GITCODE_H

@@ -26,6 +26,12 @@ public:
 	}
 };
 
+class ERROR_DATO_YA_INSERTADO :public exception {
+public:
+	const char* what() {
+		return "Error el dato introducido ya se encuentra dentro del arbol.";
+	}
+};
 
 
 #endif // !EXCEPCIONES_H

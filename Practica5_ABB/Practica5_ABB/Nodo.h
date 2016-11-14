@@ -12,7 +12,7 @@ private:
 
 public:
 	//Creamos el constructor por defecto de la clase.
-	Nodo() :dato(NULL) { izquierda = 0; derecha = 0; }
+	Nodo() :dato(0) { izquierda = 0; derecha = 0; }
 	//Creamos un constructor por parametros con el parametro dato.
 	Nodo(T mdato) :dato(mdato) { izquierda = izquierda; derecha = derecha; }
 	//Creamos un constructor por parametros con todos los parametros de la clase.
@@ -33,9 +33,9 @@ public:
 	void setDerecha(Nodo<T>* mderecha) { derecha = mderecha; }
 
 	//Creamos unos metodos para saber si el nodo ya existe o si existen a su derecha o a su izquierda.
-	bool existe() { return nodo != NULL; }
-	bool existeDerecha() { return nodo->getDerecha() != 0; }
-	bool existeIzquierda() { return nodo->getIzquierda() != 0; }
+	bool existe() { return dato != NULL; }
+	bool existeDerecha() { return getDerecha() != 0; }
+	bool existeIzquierda() { return getIzquierda() != 0; }
 
 };
 

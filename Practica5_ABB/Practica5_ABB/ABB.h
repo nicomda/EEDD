@@ -11,7 +11,7 @@ private:
 	Nodo<T>* raiz;
 	unsigned numElementos;
 public:
-	ABB() { raiz = null; numElementos = 0; }
+	ABB() { raiz = NULL; numElementos = 0; }
 	ABB(Nodo<T>* mraiz, unsigned mnumElementos) { raiz = mraiz; numElementos = mnumElementos; }
 	ABB(const ABB<T>& orig) { raiz = orig.raiz; numElementos = orig.numElementos; }
 	~ABB() {}
@@ -22,19 +22,19 @@ public:
 	void setRaiz(Nodo<T>* mraiz) { this->raiz = mraiz; }
 	void setNumElementos(unsigned mnumElementos) { this->numElementos = mnumElementos; }
 
-	bool buscar(T& mdato, Nodo<T>* nodo);
+	bool buscar(T& mdato);
 	bool insertar(T& mdato);
 	Nodo<T>* menorDescendiente(Nodo<T> *mnodo);
 	Nodo<T>* buscarMinimo(Nodo<T> *mnodo);
-	bool eliminar(T& mdato, Nodo<T>* mnodo);
+	bool eliminar(T& mdato);
 	int altura(T& mdato);
 	int alturaTotal(Nodo<T>* mnodo);
 	int numHojas(Nodo<T>* mnodo);
 
-
 };
 template<class T>
-bool ABB<T>::buscar(T& mdato, Nodo<T>* mnodo) {
+bool ABB<T>::buscar(T& mdato) {
+	Nodo<T>* mnodo;
 	bool encontrado = false;
 	mnodo = raiz;
 	while (!encontrado && mnodo != NULL) {
@@ -50,40 +50,36 @@ bool ABB<T>::buscar(T& mdato, Nodo<T>* mnodo) {
 			}
 		}
 	}
+	throw ERROR_DATOS_INCORRECTOS();
 	return encontrado;
 }
 
 template<class T>
 bool ABB<T>::insertar(T& mdato) {
-	Nodo<T>* nodo, iABB;
+	Nodo<T>* nodo=new Nodo<T>(mdato);
+	Nodo<T>* iABB;
 	bool encontrado = buscar(mdato, nodo);
 	bool insertado = false;
 	if (encontrado) {
 		return false;
-	}
-	else {
-		nodo = new Nodo<T>(mdato);
+	}else {
 		iABB = raiz; //Ponemos el iterador en la raiz del arbol
 		if (!raiz) {
 			raiz = nodo; //para que apunte al nodo.
 			numElementos++;
-		}
-		else {
+		}else {
 			while (!insertado) {
 				if (mdato < iABB->getDato()) {
 					if (iABB->existeIzquierda()) {
 						iABB = iABB->getIzquierda();
-					}
-					else {
+					} else {
 						iABB->setIzquierda(nodo);
 						insertado = true;
 					}
-				}
-				else {
+				} else {
 					if (iABB->existeDerecha()) {
 						iABB = iABB->getDerecha();
-					}
-					else {
+					} else {
 						iABB->setDerecha(nodo);
 						insertado = true;
 					}
@@ -119,57 +115,56 @@ Nodo<T>* ABB<T>::buscarMinimo(Nodo<T> *mnodo) {
 	return mnodo;
 }
 
+
 template<class T>
-bool ABB<T>::eliminar(T& mdato, Nodo<T>* mnodo){
+bool ABB<T>::eliminar(T& mdato) {
+	Nodo<T>* mnodo;
 	Nodo<T>* aux;
-	if (mnodo == NULL) throw ERROR_DATOS_INCORRECTOS() {
+	if (mnodo == NULL) {
 		return false;
 	}
 	else {
 		//Por la izquierda.
 		if (mdato < mnodo->getDato()) {
-			mnodo->getIzquierda() = borrar(mnodo->getIzquierda(), mdato);
-			return true;
-		}
-		else if (mdato > mnodo->getDato()) {
-			//Por la derecha.
-			mnodo->getDerecha() = borrar(mnodo->getDerecha(), mdato);
-			return true;
+			return eliminar(mdato, mnodo->getIzquierda());
 		}
 		else {
+			if (mdato > mnodo->getDato()) {
+			//Por la derecha.
+				return eliminar(mdato, mnodo->getDerecha());
+			} else {
 			//Si encontramos el elemento.
-			if (mnodo->getIzquierda() && mnodo->getDerecha()) {
+				if (mnodo->getIzquierda() && mnodo->getDerecha()) {
 				//Si tiene dos hijos.
 				aux = menorDescendiente(mnodo->getDerecha());
 				mnodo->getDato() = aux->getDato(); //Copiamos el nodo en uno auxiliar.
-				mnodo->getDerecha() = borrar(mnodo->getDerecha(), aux->getDato()); //borramos nodo
+				mnodo->getDerecha() = eliminar(mnodo->getDerecha(), aux->getDato()); //borramos nodo
 				return true;
-			}
-			else {
+				}else {
 				//Si tiene un solo hijo o ninguno.
-				aux = mnodo;
-				//Si solo tiene un hijo derecho o no tiene hijos
-				if (mnodo->getIzquierda() == NULL) {
-					mnodo = mnodo->getDerecha();
-					return true;
-				}
-				else {
-					//Si solo tiene un hijo izquierdo
-					if (mnodo->getDerecha() == NULL) {
-						mnodo = mnodo->getIzquierda();
+					aux = mnodo;
+					//Si solo tiene un hijo derecho o no tiene hijos
+					if (mnodo->getIzquierda() == NULL) {
+						mnodo = mnodo->getDerecha();
 						return true;
+					} else {
+					//Si solo tiene un hijo izquierdo
+						if (mnodo->getDerecha() == NULL) {
+							mnodo = mnodo->getIzquierda();
+							return true;
+						}
+						free(aux);
 					}
-					free(aux);
 				}
 			}
 		}
-
 	}
 }
 
 template <class T>
 int ABB<T>::altura(T& mdato) {
-	Nodo<T>* nodo, iABB;
+	Nodo<T>* nodo;
+	Nodo<T>* iABB;
 	bool encontrado = buscar(mdato, nodo);
 	int nivel = 0;
 	if (encontrado) {
@@ -229,5 +224,3 @@ int ABB<T>::numHojas(Nodo<T>* mnodo) {
 
 
 #endif // !ABB_H
-
-

@@ -102,7 +102,7 @@ void GitCode::cargarCommits(string mfileCommits) {
 		}
 		commit.addFichero(&(*ifichero));
 		commits.push_back(commit);
-
+		//Nuevo codigo del Arbol.
 		list<Commit>::iterator iCommits;
 		iCommits = commits.end();
 		iCommits--;
@@ -173,3 +173,25 @@ void GitCode::eliminarFichero(string mnombre) {
 		ficheros.erase(ifichero);
 	}
 }
+
+void GitCode::nuevoCommit(RefCommit commit){
+
+	if (commitsPorClave.buscar(commit)) throw ERROR_DATO_YA_INSERTADO();
+	else {
+		commitsPorClave.insertar(commit);
+	}
+
+}
+
+bool GitCode::borrarCommit(string commit){
+	//hay que arreglar la función de eliminar antes.
+}
+
+string GitCode::getStatus(){
+	//No me sale xk no se que arbol tengo que coger se supone " que hay que coger el RefCommit creado en el .h del GitCode pero cuando lo pongo me da error.
+
+}
+
+//Y HACER EL MAIN :)
+//HE MODIFICADO LAS FUNCIONES PARA QUE EN VEZ DE PASARLE EL NODO Y EL DATO LE PASE SOLO EL DATO Y EL NODO SE CREA DENTRO PORQUE NOSE DE DONDE COÑO HAY QUE SACAR EL NODO PARA PASARLO POR LA FUNCION.
+//Porque si coges el nodo raiz para calcular el nivel se corta al inicio y si es para contar el numero de hojas igual es un asco esto.
