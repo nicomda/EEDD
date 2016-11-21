@@ -195,8 +195,8 @@ void GitCode::nuevoCommit(Commit& mcommit) {
 bool GitCode::borrarCommit(string mcodigo) {
 	list<Commit>::iterator itc;
 	itc = commits.begin();
-	RefCommit arbol(commit, itc);
-	if (commitsPorClave.borrar(arbol)) {
+	RefCommit arbol(mcodigo, itc);
+	if (commitsPorClave.eliminar(arbol)) {
 		return true;
 	}
 	return false;
@@ -204,6 +204,8 @@ bool GitCode::borrarCommit(string mcodigo) {
 
 string GitCode::getStatus() {
 	string status = "";
-	status = "Numero de Hojas: " + commitsPorClave.numHojas() + ", Altura: " + commitsPorClave.alturaTotal() + ", Numero de elementos: " + commitsPorClave.getNumElementos();
+	status = "Numero de Hojas: " + commitsPorClave.numHojas();
+	status += ", Altura: " + commitsPorClave.alturaTotal();
+	status += ", Numero de elementos: " + commitsPorClave.getNumElementos();
 	return status;
 }

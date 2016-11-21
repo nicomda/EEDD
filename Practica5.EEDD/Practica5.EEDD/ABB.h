@@ -11,8 +11,8 @@ private:
 	Nodo<T>* raiz;
 	unsigned numElementos;
 	//Nodo<T>* borraDato(T& mdato, Nodo<T>* mnodo);
-	void borrarSinHijos(Nodo<T> *padre, Nodo<T> *borrar);
-	void borrarConHijos(Nodo<T> *borrar);
+	void borrarNodo(Nodo<T>* mpadre, Nodo<T>* mnodo);
+	void borrarNodoHijos(Nodo<T>* mnodo);
 	void preorden(Nodo<T>* mnodo, int nivel);
 	void inorden(Nodo<T>* mnodo, int nivel);
 	void postorden(Nodo<T>* mnodo, int nivel);
@@ -36,11 +36,11 @@ public:
 	bool buscar(T& mdato);
 	bool insertar(T& mdato);
 	int altura(T& mdato);
-	int alturaTotal(Nodo<T>* mnodo);
-	int numHojas(Nodo<T>* mnodo);
+	int alturaTotal();
+	int numHojas();
 	//bool eliminar(T& mdato);
 	//Nodo<T>* borraMin(Nodo<T>* mnodo);
-	bool borrar(T& ele);
+	bool eliminar(T& mdato);
 };
 template <class T>
 void ABB<T>::preorden(Nodo<T>* mnodo, int nivel) {
@@ -175,14 +175,16 @@ int ABB<T>::altura(T& mdato) {
 }
 
 template <class T>
-int ABB<T>::alturaTotal(Nodo<T>* mnodo) {
-	int AltIzquierda, AltDerecha;
+int ABB<T>::alturaTotal() {
+	Nodo<T>* mnodo = raiz;
+	int AltIzquierda;
+	int AltDerecha;
 	if (!mnodo) {
 		return -1;
 	}
 	else {
 		AltIzquierda = alturaTotal(mnodo->getIzquierda());
-		AllDerecha = alturaTotal(mnodo->getDerecha());
+		AltDerecha = alturaTotal(mnodo->getDerecha());
 		if (AltIzquierda > AltDerecha) {
 			return AltIzquierda + 1;
 		}
@@ -193,7 +195,8 @@ int ABB<T>::alturaTotal(Nodo<T>* mnodo) {
 }
 
 template <class T>
-int ABB<T>::numHojas(Nodo<T>* mnodo) {
+int ABB<T>::numHojas() {
+	Nodo<T>* mnodo = raiz;
 	if (!mnodo)return 0;
 	if (!mnodo->existeIzquierda() && !mnodo->existeDerecha()) {
 		return 1;
@@ -253,86 +256,96 @@ bool ABB<T>::eliminar(T& mdato) {
 */
 
 template<typename T>
-void ABB<T>::borrarSinHijos(Nodo<T> *padre, Nodo<T> *borrar) {
-	if (padre != 0) {
-		if (borrar->dato<padre->dato)
-			padre->izq = 0;
-		if (borrar->dato>padre->dato)
-			padre->der = 0;
+void ABB<T>::borrarNodo(Nodo<T>* mpadre, Nodo<T>* mnodo) {
+	if (mpadre != 0) {
+		if (mnodo->getDato() < mpadre->getDato()) {
+			mpadre->getIzquierda() = 0;
+		}
+		if (mnodo->getDato() > mpadre->getDato()) {
+			mpadre->getDerecha() = 0;
+		}
+			
 	}
-	delete borrar;
+	delete mnodo;
 }
 
 template<typename T>
-void ABB<T>::borrarConHijos(Nodo<T> *borrar) {
-	Nodo<T> *aux = borrar;
-	Nodo<T> *aux2 = borrar;
-	if (aux->izq) {
-		aux = aux->izq;
-		if (!aux2->izq->der) {
-			aux2->izq = 0;
-			borrar->dato = aux->dato;
-			delete aux;
+void ABB<T>::borrarNodoHijos(Nodo<T>* mnodo) {
+	Nodo<T>* auxiliar = mnodo;
+	Nodo<T>* auxiliar2 = mnodo;
+	if (auxiliar->getIzquierda()) {
+		auxiliar = auxiliar->getIzquierda();
+		if (!auxiliar2->getIzquierda()->getDerecha()) {
+			auxiliar2->getIzquierda() = 0;
+			mnodo->getDato() = auxiliar->getDato();
+			delete auxiliar;
 			return;
 		}
-		while (aux->der != 0) {
-			if (aux->der->der)
-				aux2 = aux2->der;
-			aux = aux->der;
+		while (auxiliar->getDerecha() != 0) {
+			if (auxiliar->getDerecha()->getDerecha()) {
+				auxiliar2 = auxiliar2->getDerecha();
+			}
+			auxiliar = auxiliar->getDerecha();
 		}
-		borrar->dato = aux->dato;
-		aux2->der = 0;
+		mnodo->getDato() = auxiliar->getDato();
+		auxiliar2->getDerecha() = 0;
 	}
 	else {
-		aux = aux->der;
-		if (!aux2->der->izq) {
-			aux2->der = 0;
-			borrar->dato = aux->dato;
-			delete aux;
+		auxiliar = auxiliar->getDerecha();
+		if (!auxiliar2->getDerecha()->getIzquierda()) {
+			auxiliar2->getDerecha() = 0;
+			mnodo->getDato() = auxiliar->getDato();
+			delete auxiliar;
 			return;
 		}
 
-		if (aux->der->izq)
-			aux2 = aux2->der;
-		while (aux->izq != 0) {
-			if (aux2->izq->izq)
-				aux2 = aux2->izq;
-			aux = aux->izq;
+		if (auxiliar->getDerecha()->getIzquierda()) {
+			auxiliar2 = auxiliar2->getDerecha();
 		}
-		borrar->dato = aux->dato;
-		aux2->izq = 0;
+		while (auxiliar->getIzquierda() != 0) {
+			if (auxiliar2->getIzquierda()->getIzquierda()) {
+				auxiliar2 = auxiliar2->getIzquierda();
+			}
+			auxiliar = auxiliar->getIzquierda();
+		}
+		mnodo->getDato() = auxiliar->getDato();
+		auxiliar2->getIzquierda() = 0;
 	}
-	delete aux;
+	delete auxiliar;
 }
 
 template<typename T>
-bool ABB<T>::borrar(T& ele) {
-	Nodo<T> *aux = raiz;
-	Nodo<T> *aux2 = raiz;
-	if (ele == raiz->dato) {
+bool ABB<T>::eliminar(T& mdato) {
+	Nodo<T>* auxiliar = raiz;
+	Nodo<T>* auxiliar2 = raiz;
+	if (mdato == raiz->getDato()) {
 		delete raiz;
 		raiz = 0;
 		return true;
 	}
 
-	while (aux->hayDato()) {
-		if (ele<aux->dato) {
-			if (aux2->izq->izq)
-				aux2 = aux2->izq;
-			aux = aux->izq;
+	while (auxiliar->existe()) {
+		if (mdato < auxiliar->getDato()) {
+			if (auxiliar2->getIzquierda()->getIzquierda()) {
+				auxiliar2 = auxiliar2->getIzquierda();
+			}
+				
+			auxiliar = auxiliar->getIzquierda();
 		}
 
-		if (ele>aux->dato) {
-			if (aux2->der->der)
-				aux2 = aux2->der;
-			aux = aux->der;
+		if (mdato > auxiliar->getDato()) {
+			if (auxiliar2->getDerecha()->getDerecha()) {
+				auxiliar2 = auxiliar2->getDerecha();
+			}
+	
+			auxiliar = auxiliar->getDerecha();
 		}
 
-		if (aux->dato == ele) {
-			if (aux->izq == 0 && aux->der == 0)
-				borrarSinHijos(aux2, aux);
+		if (auxiliar->getDato() == mdato) {
+			if (auxiliar->getIzquierda() == 0 && auxiliar->getDerecha() == 0)
+				borrarNodo(auxiliar2, auxiliar);
 			else
-				borrarConHijos(aux);
+				borrarNodoHijos(auxiliar);
 			return true;
 		}
 	}

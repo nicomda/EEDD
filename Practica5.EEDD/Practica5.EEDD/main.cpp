@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 		cout << "Insertando commit en el arbol........... espere un momento.......... " << endl;
 		if (!insertado) {
 			
-			git.nuevoCommit();
+			//git.nuevoCommit();
 		}
 		if (insertado == true) {
 			cout << "Commit insertado con exito en el arbol." << endl;
