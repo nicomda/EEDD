@@ -13,7 +13,7 @@
 using namespace std;
 
 int main(int argc, char** argv) {
-	try {
+	//try {
 		GitCode git("ficheros2.txt", "commits.txt");
 		Commit commit;
 		list<Commit*> commits;
@@ -24,7 +24,8 @@ int main(int argc, char** argv) {
 		bool insertado = false;
 		cout << "Insertando commit en el arbol........... espere un momento.......... " << endl;
 		if (!insertado) {
-			//git.nuevoCommit();
+			
+			git.nuevoCommit();
 		}
 		if (insertado == true) {
 			cout << "Commit insertado con exito en el arbol." << endl;
@@ -48,7 +49,7 @@ int main(int argc, char** argv) {
 			cout << "FIN DEL PROGRAMA. QUE TENGA BUEN DIA................" << endl;
 		}
 		
-		
+	/*
 	}
 	catch (ERROR_DATOS_INCORRECTOS &error) {
 		cerr << "Excepcion: " << error.what() << endl;
@@ -63,4 +64,5 @@ int main(int argc, char** argv) {
 	catch (std::ifstream::failure &error) {
 		cerr << "Excepcion: Error al leer el fichero" << error.what() << endl;
 	}
+	*/
 }

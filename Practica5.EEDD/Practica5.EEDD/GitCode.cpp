@@ -179,25 +179,31 @@ void GitCode::eliminarFichero(string mnombre) {
 
 
 
-void GitCode::nuevoCommit(RefCommit commit) {
-	if (commitsPorClave.buscar(commit)) throw ERROR_DATO_YA_INSERTADO();
+void GitCode::nuevoCommit(Commit& mcommit) {
+	list<Commit>::iterator itc;
+	commits.push_back(mcommit);
+	itc = commits.end();
+	itc--;
+	RefCommit arbol(mcommit.getCodigo(), itc);
+	if (commitsPorClave.buscar(arbol)) throw ERROR_DATO_YA_INSERTADO();
 	else {
-		commitsPorClave.insertar(commit);
+		commitsPorClave.insertar(arbol);
 	}
 
 }
 
-bool GitCode::borrarCommit(string commit) {
+bool GitCode::borrarCommit(string mcodigo) {
 	list<Commit>::iterator itc;
 	itc = commits.begin();
 	RefCommit arbol(commit, itc);
-	if (commitsPorClave.eliminar(arbol)) {
+	if (commitsPorClave.borrar(arbol)) {
 		return true;
 	}
 	return false;
 }
 
 string GitCode::getStatus() {
-
-	return string();
+	string status = "";
+	status = "Numero de Hojas: " + commitsPorClave.numHojas() + ", Altura: " + commitsPorClave.alturaTotal() + ", Numero de elementos: " + commitsPorClave.getNumElementos();
+	return status;
 }

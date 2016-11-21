@@ -57,8 +57,8 @@ public:
 	//Creamos la funcion para eliminar ficheros contenidos en un Commit.
 	void eliminarFichero(string mnombre);
 	//Creamos las funciones para agregar Commits al arbol, eliminarlos y ver su estado.
-	void nuevoCommit(RefCommit commit);
-	bool borrarCommit(string commit);
+	void nuevoCommit(Commit& commit);
+	bool borrarCommit(string mcodigo);
 	string getStatus();
 };
 #endif // !GITCODE_H

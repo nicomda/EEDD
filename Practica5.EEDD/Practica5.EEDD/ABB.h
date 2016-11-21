@@ -10,7 +10,9 @@ class ABB {
 private:
 	Nodo<T>* raiz;
 	unsigned numElementos;
-	Nodo<T>* borraDato(T& mdato, Nodo<T>* mnodo);
+	//Nodo<T>* borraDato(T& mdato, Nodo<T>* mnodo);
+	void borrarSinHijos(Nodo<T> *padre, Nodo<T> *borrar);
+	void borrarConHijos(Nodo<T> *borrar);
 	void preorden(Nodo<T>* mnodo, int nivel);
 	void inorden(Nodo<T>* mnodo, int nivel);
 	void postorden(Nodo<T>* mnodo, int nivel);
@@ -36,8 +38,9 @@ public:
 	int altura(T& mdato);
 	int alturaTotal(Nodo<T>* mnodo);
 	int numHojas(Nodo<T>* mnodo);
-	bool eliminar(T& mdato);
-	Nodo<T>* borraMin(Nodo<T>* mnodo);
+	//bool eliminar(T& mdato);
+	//Nodo<T>* borraMin(Nodo<T>* mnodo);
+	bool borrar(T& ele);
 };
 template <class T>
 void ABB<T>::preorden(Nodo<T>* mnodo, int nivel) {
@@ -200,7 +203,7 @@ int ABB<T>::numHojas(Nodo<T>* mnodo) {
 	}
 
 }
-
+/*
 template <class T>
 Nodo<T> *ABB<T>::borraMin(Nodo<T>* mnodo) {
 	Nodo<T> *resultado;
@@ -244,6 +247,95 @@ template<class T>
 bool ABB<T>::eliminar(T& mdato) {
 	Nodo<T>* resultado = borraDato(mdato, raiz);
 	if (resultado) return true;
+	return false;
+}
+
+*/
+
+template<typename T>
+void ABB<T>::borrarSinHijos(Nodo<T> *padre, Nodo<T> *borrar) {
+	if (padre != 0) {
+		if (borrar->dato<padre->dato)
+			padre->izq = 0;
+		if (borrar->dato>padre->dato)
+			padre->der = 0;
+	}
+	delete borrar;
+}
+
+template<typename T>
+void ABB<T>::borrarConHijos(Nodo<T> *borrar) {
+	Nodo<T> *aux = borrar;
+	Nodo<T> *aux2 = borrar;
+	if (aux->izq) {
+		aux = aux->izq;
+		if (!aux2->izq->der) {
+			aux2->izq = 0;
+			borrar->dato = aux->dato;
+			delete aux;
+			return;
+		}
+		while (aux->der != 0) {
+			if (aux->der->der)
+				aux2 = aux2->der;
+			aux = aux->der;
+		}
+		borrar->dato = aux->dato;
+		aux2->der = 0;
+	}
+	else {
+		aux = aux->der;
+		if (!aux2->der->izq) {
+			aux2->der = 0;
+			borrar->dato = aux->dato;
+			delete aux;
+			return;
+		}
+
+		if (aux->der->izq)
+			aux2 = aux2->der;
+		while (aux->izq != 0) {
+			if (aux2->izq->izq)
+				aux2 = aux2->izq;
+			aux = aux->izq;
+		}
+		borrar->dato = aux->dato;
+		aux2->izq = 0;
+	}
+	delete aux;
+}
+
+template<typename T>
+bool ABB<T>::borrar(T& ele) {
+	Nodo<T> *aux = raiz;
+	Nodo<T> *aux2 = raiz;
+	if (ele == raiz->dato) {
+		delete raiz;
+		raiz = 0;
+		return true;
+	}
+
+	while (aux->hayDato()) {
+		if (ele<aux->dato) {
+			if (aux2->izq->izq)
+				aux2 = aux2->izq;
+			aux = aux->izq;
+		}
+
+		if (ele>aux->dato) {
+			if (aux2->der->der)
+				aux2 = aux2->der;
+			aux = aux->der;
+		}
+
+		if (aux->dato == ele) {
+			if (aux->izq == 0 && aux->der == 0)
+				borrarSinHijos(aux2, aux);
+			else
+				borrarConHijos(aux);
+			return true;
+		}
+	}
 	return false;
 }
 
