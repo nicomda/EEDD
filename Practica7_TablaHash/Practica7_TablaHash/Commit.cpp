@@ -1,6 +1,6 @@
 #include "Commit.h"
 
-Commit::Commit(string mcodigo, string mmarcaDeTiempo, string mmensaje, long mindicesFicherosModificados) :ficherosMod(), f() {
+Commit::Commit(string mcodigo, string mmarcaDeTiempo, string mmensaje) :ficherosMod(), f() {
 	this->codigo = mcodigo;
 	this->marcaDeTiempo = mmarcaDeTiempo;
 	this->mensaje = mmensaje;
@@ -11,7 +11,6 @@ Commit::Commit(const Commit& orig) :ficherosMod(orig.ficherosMod), f(orig.f) {
 	this->codigo = orig.codigo;
 	this->marcaDeTiempo = orig.marcaDeTiempo;
 	this->mensaje = orig.mensaje;
-	this->indicesFicherosModificados = orig.indicesFicherosModificados;
 	//this->f.pasarFFecha(orig.marcaDeTiempo);
 }
 

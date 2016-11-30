@@ -2,12 +2,12 @@
 
 
 
-GitCode::GitCode(string mfileFichero, string mfileCommits) :fileFichero(mfileFichero), fileCommits(mfileCommits), commits(), ficheros(), ficherosActivos(), hashCommits() {
+GitCode::GitCode(string mfileFichero, string mfileCommits) :fileFichero(mfileFichero), fileCommits(mfileCommits), commits(), ficheros(), ficherosActivos(){
 	cargarFichero(mfileFichero);
 	cargarCommits(mfileCommits);
 }
 
-GitCode::GitCode(const GitCode& orig) : fileFichero(orig.fileFichero), fileCommits(orig.fileCommits), commits(orig.commits), ficheros(orig.ficheros), ficherosActivos(orig.ficherosActivos), hashCommits(orig.hashCommits) {
+GitCode::GitCode(const GitCode& orig) : fileFichero(orig.fileFichero), fileCommits(orig.fileCommits), commits(orig.commits), ficheros(orig.ficheros), ficherosActivos(orig.ficherosActivos) {
 	cargarFichero(orig.fileFichero);
 	cargarCommits(orig.fileCommits);
 }
@@ -15,6 +15,7 @@ GitCode::GitCode(const GitCode& orig) : fileFichero(orig.fileFichero), fileCommi
 GitCode::~GitCode() {
 	commits.clear();
 	ficheros.clear();
+	
 }
 
 void GitCode::cargarFichero(string mfileFichero) {
@@ -113,28 +114,31 @@ void GitCode::cargarCommits(string mfileCommits) {
 		}
 		nombresFicheros.push_back((*ificheros).getNombre());
 		//commit.addfichero(&(*ificheros));
-		//nuevoCommit(codigo, mensajeS, marcatiempo, nombresFicheros);
+		nuevoCommit();
 		//commits.push_back(commit);	
 		//nuevoCommit(commit);
 	}
 	inputStream.close();
 }
 
-
+Fichero* GitCode::buscarFichero(string mnombre){
+	map<string, Fichero*>::iterator iEncontrado;
+	vector<Fichero>::iterator ificheros;
+	iEncontrado = ficherosActivos.find(mnombre);
+	if (iEncontrado != ficherosActivos.end()) {
+		return (*iEncontrado).second;
+	}
+	return NULL;
+}
 
 bool GitCode::getCommit(string mcodigo, Commit& mcommit) {
-	list<Commit>::iterator icommit;
-	icommit = commits.begin();
-	while (icommit != commits.end()) {
-		if ((*icommit).getCodigo == mcodigo) {
-			mcommit = *icommit;
-			return true;
-		}
-		else {
-			icommit++;
-		}
+	map<string, list<Commit>::iterator>::iterator imapCommit;
+	imapCommit = mapCommits.find(mcodigo);
+	if (imapCommit == mapCommits.end()) {
+		return false;
 	}
-	return false;
+	mcommit = (*(*imapCommit).second);
+	return true;
 }
 
 list<Commit*> GitCode::getCommitFechas(Fecha inicio, Fecha fin) {
@@ -163,55 +167,101 @@ list<Commit*> GitCode::getCommitFichero(string mnombre) {
 	return vCommits;
 }
 
-void GitCode::nuevoCommit(Commit mcommit){
+
+
+void GitCode::nuevoCommit(){
+	Commit commit(mcodigo, mmarcadetiempo, mmensaje);
+	Fichero* encontrado = 0;
+	map<string, list<Commit>::iterator>::iterator imapCommit;
+	imapCommit = mapCommits.find(mcodigo);
+	if (imapCommit != mapCommits.end()) throw ERROR_COMMIT_REPETIDO();
+	vector<string>::iterator inombreFichero = mficheros.begin();
+	while (inombreFichero != mficheros.end()) {
+		encontrado = buscarFichero(*inombreFichero);
+		if (encontrado) {
+			commit.addFichero(encontrado);
+		}
+		inombreFichero++;
+	}
+	list<Commit>::iterator iCommit;
+	commits.push_back(commit);
+	iCommit = commits.end();
+	iCommit--;
+	pair<string, list<Commit>::iterator> pairmapCommit;
+	pairmapCommit.first = mcodigo;
+	pairmapCommit.second = iCommit;
+	mapCommits.insert(pairmapCommit);
+}
+
+void GitCode::borraCommit(){
+	map<string, list<Commit>::iterator>::iterator imapCommit;
+	imapCommit = mapCommits.find(mcodigo);
+	if (imapCommit == mapCommits.end()) throw ERROR_COMMIT_NO_ENCONTRADO();
+	commits.erase((*imapCommit).second);
+	mapCommits.erase(mcodigo);
+}
+
+vector<Fichero*> GitCode::getFicherosActivos(){
+	vector<Fichero*> ficheroActivo;
+	map<string, Fichero*>::iterator iFicherosActivos = ficherosActivos.begin();
+	while (iFicherosActivos != ficherosActivos.end()) {
+		ficheroActivo.push_back((*iFicherosActivos).second);
+		iFicherosActivos++;
+	}
+	return ficheroActivo;
+}
+
+
+void GitCode::nuevoFichero(){
+	pair<string, Fichero*> pairFichero;
+	map<string, Fichero*>::iterator iEncontrado;
+	vector<Fichero>::iterator iFicheros;
+	iEncontrado = ficherosActivos.find(mfichero.getNombre());
+	if (iEncontrado == ficherosActivos.end()) {
+		ficheros.push_back(mfichero);
+		iFicheros = ficheros.end();
+		iFicheros--;
+
+		pairFichero.first = mfichero.getNombre();
+		pairFichero.second = &(*iFicheros);
+		ficherosActivos.insert(pairFichero);
+	}
+	else {
+		throw ERROR_FICHERO_REPETIDO();
+	}
+}
+
+void GitCode::borraFichero(){
+	ficherosActivos.erase(mnombre);
+}
+
+
+void GitCode::nuevoCommit(Commit mcommit) {
 	list<Commit>::iterator itc;
 	commits.push_back(mcommit);
 	itc = commits.end();
 	itc--;
-	RefCommit thash(mcommit.getCodigo(), itc);
-	if (commitsPorClave.buscar(mcommit.getIndicesFicherosModificados(),thash.getCodCommit())) throw ERROR_DATO_YA_INSERTADO();
+	RefCommit tabla(mcommit.getCodigo(), itc);
+	float clave = commitsPorClave.djb2(tabla.getCodCommit());
+	if (commitsPorClave.buscar(clave,tabla) throw ERROR_DATO_YA_INSERTADO();
 	else {
-		commitsPorClave.insertar(mcommit.getIndicesFicherosModificados(),thash.getCodCommit());
+		commitsPorClave.insertar(arbol);
 	}
 }
 
-void GitCode::borraCommit(string mcodigo){
-	Commit c = mcodigo;
-	list<Commit>::iterator itc;
-	commits.push_back(c);
-	itc = commits.end();
-	itc--;
-	RefCommit thash(c.getCodigo(),itc);
-	if (!commitsPorClave.buscar(c.getIndicesFicherosModificados(),thash.getCodCommit())) throw ERROR_COMMIT_NO_ENCONTRADO();
-	commits.erase(thash.itc);
-	commitsPorClave.eliminar(c.getIndicesFicherosModificados(), thash.getCodCommit());
-
-	
+void GitCode::borraCommit(string mcodigo)
+{
 }
 
-string GitCode::getStatus(){
-	string status = "";
-	status.append("Tamaño de la tabla: " + commitsPorClave.getTamaTabla());
-	status.append(", Numero de elementos: " + commitsPorClave.getNumeroElementos());
-	status.append(", Numero maximo de colisiones: " + commitsPorClave.getMaxColisiones());
-	status.append(", Factor de carga: " + commitsPorClave.factorCarga() + ". ");
-	return status;
+string GitCode::getStatus()
+{
+	return string();
 }
 
-int GitCode::getNumFicheros(){
-	return 0;
+void GitCode::nuevoFichero(Fichero & mfichero)
+{
 }
 
-vector<Fichero*> GitCode::getFicherosActivos(){
-	
+void GitCode::borraFichero(string mnombre)
+{
 }
-
-void GitCode::nuevoFichero(Fichero &mfichero){
-	
-}
-
-void GitCode::borraFichero(string mnombre){
-	
-}
-
-

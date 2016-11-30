@@ -47,11 +47,4 @@ public:
 	}
 };
 
-class ERROR_DATO_YA_INSERTADO :public exception {
-public:
-	const char* what() {
-		return "EL dato ya se ha introducido en la tabla antes.";
-	}
-};
-
 #endif // !EXCEPCIONES_H

@@ -8,14 +8,15 @@
 #include "Excepciones.h"
 #include <list>
 #include <vector>
-#include "THashCerrada.h"
+#include <map>
+#include <set>
 #include <cstdio>
 using namespace std;
 
 int main(int argc, char** argv) {
 	try {
             int select=0;
-            GitCode git("ficheros2.txt", "commits 2.txt");
+            GitCode git("ficheros2.txt", "commits.txt");
             string nombre, codigo, mmarcadetiempo, mmensaje,ruta;
             vector<string> mficheros;
             int numFich,insertfich,tamabytes;

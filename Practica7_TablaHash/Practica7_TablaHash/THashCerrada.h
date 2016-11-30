@@ -12,16 +12,17 @@ private:
 	class Casilla {
 		T dato;
 		char estado;
-	public: 
+	public:
 		Casilla() :dato() { estado = ''; }
 	};
 	vector<Casilla> tabla;
 	unsigned tamTabla;
 	unsigned numeroElementos;
 	unsigned maxColision;
-public: 
+public:
 	THashCerrada() :tabla() { tamTabla = 0; numeroElementos = 0; maxColision = 0; }
-	THashCerrada(unsigned mtam) : tabla(mtam) { tamTabla = mtam; numeroElementos = 0; maxColision = 0; Casilla c; vector<Casilla>::iterator itabla = tabla.begin();
+	THashCerrada(unsigned mtam) : tabla(mtam) {
+		tamTabla = mtam; numeroElementos = 0; maxColision = 0; Casilla c; vector<Casilla>::iterator itabla = tabla.begin();
 		while (itabla != tabla.end()) {
 			(*itabla) = c;
 			itabla++;
@@ -33,6 +34,7 @@ public:
 	bool insertar(long mclave, const T& mdato);
 	T* buscar(long mclave, const T& mdato);
 	bool eliminar(long mclave, const T& mdato);
+	unsigned long djb2(string *str);
 	unsigned getTamaTabla() { return tamTabla; }
 	unsigned getNumeroElementos() { return numeroElementos; }
 	unsigned getMaxColisiones() { return maxColision; }
@@ -42,7 +44,7 @@ public:
 #endif // !THASHCERRADA_H
 
 template<class T>
-bool THashCerrada<T>::insertar(long mclave, const T & mdato){
+bool THashCerrada<T>::insertar(long mclave, const T & mdato) {
 	int i = 0;
 	unsigned pos = mclave + pow(i, 2);
 	bool libre = false;
@@ -67,7 +69,7 @@ bool THashCerrada<T>::insertar(long mclave, const T & mdato){
 }
 
 template<class T>
-T * THashCerrada<T>::buscar(long mclave, const T& mdato){
+T * THashCerrada<T>::buscar(long mclave, const T& mdato) {
 	if (tabla == NULL) {
 		return NULL;
 	}
@@ -124,7 +126,16 @@ bool THashCerrada<T>::eliminar(long mclave, const T& mdato) {
 }
 
 template<class T>
-float THashCerrada<T>::factorCarga()
-{
-	return (maxColision + pow(numeroElementos,2))%tamTabla;
+float THashCerrada<T>::factorCarga(){
+	return numeroElementos % tamTabla;
+}
+
+template<class T>
+unsigned long THashCerrada<T>::djb2(string *str) {
+	string tmp = *str; 
+	char tab2[1024]; 
+	unsigned long hash = 5381;
+	int c;
+	while (c = strcpy(tab2, tmp.c_str())++) hash = ((hash << 5) + hash) + c;
+	return hash;
 }

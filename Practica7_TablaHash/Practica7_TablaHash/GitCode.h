@@ -33,6 +33,7 @@ private:
 		bool operator> (const RefCommit &rc) const { return codCommit > rc.codCommit; }
 		bool operator!= (const RefCommit &rc) const { return codCommit != rc.codCommit; }
 	};
+
 	THashCerrada<RefCommit> commitsPorClave;
 	string fileFichero;
 	string fileCommits;
@@ -43,31 +44,30 @@ private:
 	//Funciones para cargar los Ficheros y los Commits.
 	void cargarFichero(string mfileFichero);
 	void cargarCommits(string mfileCommits);
-	//Creamos una funci�n para buscar ficheros.
-	//Creamos el map para la asociacion con los ficheros
+	//Creamos la tabla hash para la asociacion con los ficheros
 	THashCerrada<Fichero*> ficherosActivos;
-	//Creamos el map para los Commits
-	THashCerrada<list<Commit>::iterator> hashCommits;
+
 
 public:
 	//Creamos constructores de la clase:
-	GitCode() :fileFichero(" "), fileCommits(" "), commits(), ficheros(), ficherosActivos(), hashCommits() {}; //Por defecto
+	GitCode() :fileFichero(" "), fileCommits(" "), commits(), ficheros(), ficherosActivos(){}; //Por defecto
 	GitCode(string mfileFichero, string mfileCommits); //Por parametros
 	GitCode(const GitCode& orig); //Por copia
 	//Creamos el destructor de la clase.
 	~GitCode();
 
+    Fichero* buscarFichero(string nombre);
 	//creamos el metodo para saber si existe un commit.
 	bool getCommit(string mcodigo, Commit& mcommit);
 	//Creamos los vectores de commits
 	list<Commit*> getCommitFechas(Fecha inicio, Fecha fin); //Para obtener commits entre dos fechas.
 	list<Commit*> getCommitFichero(string mnombre); //Para obtener commits que contienen un fichero.
 
-	//Creamos la funcion para a�adir un nuevo commit
+	//Creamos la funcion para anadir un nuevo commit
 	void nuevoCommit(Commit mcommit);
 	void borraCommit(string mcodigo);
 	string getStatus();
-	int getNumFicheros();
+	int getNumFicheros() { return ficherosActivos.getNumeroElementos(); }
 	list<Fichero*> getFicherosActivos();
 	void nuevoFichero(Fichero& mfichero);
 	void borraFichero(string mnombre);

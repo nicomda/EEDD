@@ -19,8 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E0B7B70D-92D9-4177-A08B-BBE9FD7383B5}</ProjectGuid>
-    <RootNamespace>Practica7_Clase</RootNamespace>
+    <ProjectGuid>{718620A4-E7A6-4580-9CF6-5C3D18F2BC8A}</ProjectGuid>
+    <RootNamespace>Practica7_TablaHash</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -110,19 +110,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Commit.cpp" />
+    <ClCompile Include="Fecha.cpp" />
+    <ClCompile Include="Fichero.cpp" />
+    <ClCompile Include="GitCode.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
     <ClInclude Include="Commit.h" />
     <ClInclude Include="Excepciones.h" />
     <ClInclude Include="Fecha.h" />
     <ClInclude Include="Fichero.h" />
     <ClInclude Include="GitCode.h" />
     <ClInclude Include="THashCerrada.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="Commit.cpp" />
-    <ClCompile Include="Fecha.cpp" />
-    <ClCompile Include="Fichero.cpp" />
-    <ClCompile Include="GitCode.cpp" />
-    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
