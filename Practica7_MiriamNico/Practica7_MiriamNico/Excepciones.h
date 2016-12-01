@@ -47,4 +47,10 @@ public:
 	}
 };
 
+class ERROR_DATO_YA_INSERTADO :public exception {
+public:
+	const char* what() {
+		return "El Commit ya se ha insertado en la lista.";
+	}
+};
 #endif // !EXCEPCIONES_H

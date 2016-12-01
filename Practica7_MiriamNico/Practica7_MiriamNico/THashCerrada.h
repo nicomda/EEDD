@@ -34,7 +34,6 @@ public:
 	bool insertar(long mclave, const T& mdato);
 	T* buscar(long mclave, const T& mdato);
 	bool eliminar(long mclave, const T& mdato);
-	unsigned long djb2(string *str);
 	unsigned getTamaTabla() { return tamTabla; }
 	unsigned getNumeroElementos() { return numeroElementos; }
 	unsigned getMaxColisiones() { return maxColision; }
@@ -130,12 +129,3 @@ float THashCerrada<T>::factorCarga(){
 	return numeroElementos % tamTabla;
 }
 
-template<class T>
-unsigned long THashCerrada<T>::djb2(string *str) {
-	string tmp = *str; 
-	char tab2[1024]; 
-	unsigned long hash = 5381;
-	int c;
-	while (c = strcpy(tab2, tmp.c_str())++) hash = ((hash << 5) + hash) + c;
-	return hash;
-}

@@ -8,8 +8,7 @@
 #include "Excepciones.h"
 #include <list>
 #include <vector>
-#include <map>
-#include <set>
+#include "THashCerrada.h"
 #include <cstdio>
 using namespace std;
 
@@ -61,7 +60,7 @@ int main(int argc, char** argv) {
                         for(int i=0;i<insertfich;i++){
                             cout<<"Nombre de fichero. Quedan "<<(insertfich-i)<<endl;
                             cin>>nombre;
-                            v.push_back(git.buscarFichero(nombre));
+                            v.push_back(git.(nombre));
                         
                         }
                         cout <<"Commit insertado"<<endl;
@@ -88,7 +87,7 @@ int main(int argc, char** argv) {
                         break;
                 }
                 numFich = git.getNumFicherosActivos();
-		v=git.getFicherosActivos();
+				v=git.getFicherosActivos();
             
             }while(select!=0);
 		

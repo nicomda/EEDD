@@ -2,7 +2,7 @@
 
 
 
-GitCode::GitCode(string mfileFichero, string mfileCommits) :fileFichero(mfileFichero), fileCommits(mfileCommits), commits(), ficheros(), ficherosActivos(){
+GitCode::GitCode(string mfileFichero, string mfileCommits) :fileFichero(mfileFichero), fileCommits(mfileCommits), commits(), ficheros(), ficherosActivos(TAM){
 	cargarFichero(mfileFichero);
 	cargarCommits(mfileCommits);
 }
@@ -15,12 +15,12 @@ GitCode::GitCode(const GitCode& orig) : fileFichero(orig.fileFichero), fileCommi
 GitCode::~GitCode() {
 	commits.clear();
 	ficheros.clear();
-	
 }
 
 void GitCode::cargarFichero(string mfileFichero) {
 	string rutaFichero(mfileFichero);
 	string lineaActual;
+
 	std::ifstream inputStream;
 	inputStream.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	inputStream.open(rutaFichero);
@@ -29,8 +29,7 @@ void GitCode::cargarFichero(string mfileFichero) {
 	inputStream >> lineaActual;
 	while (!inputStream.eof()) {
 		inputStream >> lineaActual;
-
-		//Parseamos la l�nea
+		//Parseamos la linea
 		auto pos = lineaActual.find(';');
 		auto ruta = lineaActual.substr(0, pos);
 		auto tama = lineaActual.substr(pos + 1, lineaActual.length());
@@ -56,7 +55,7 @@ void GitCode::cargarCommits(string mfileCommits) {
 	string lineaActual;
 	list<Fichero>::iterator ificheros;
 	ificheros = ficheros.begin();
-	list<string> nombresFicheros;
+
 	std::ifstream inputStream;
 	inputStream.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 	inputStream.open(rutaFichero);
@@ -69,16 +68,14 @@ void GitCode::cargarCommits(string mfileCommits) {
 		// Parseamos la linea
 		auto pos = lineaActual.find(';');
 		auto codigo = lineaActual.substr(0, pos);
-		//auto posF = lineaActual.find(';');
 		auto marcatiempo = lineaActual.substr(pos + 1, 14);
-		//double marcaT = std::stoi(marcatiempo);
 		pos += 16;
 
 		auto mensaje = lineaActual.substr(pos, lineaActual.length());
 		pos = mensaje.find(';');
 		auto mensajeS = mensaje.substr(0, pos);
 		auto numFicheros = mensaje.substr(pos + 1, mensaje.length());
-		//Commit commit(codigo, marcatiempo, mensajeS);
+		Commit commit(codigo, marcatiempo, mensajeS);
 
 		// Separamos los ficheros por el la ","
 		int tamFin = numFicheros.length();
@@ -95,8 +92,7 @@ void GitCode::cargarCommits(string mfileCommits) {
 				j++;
 				ificheros++;
 			}
-			nombresFicheros.push_back((*ificheros).getNombre());
-			//commit.addfichero(&(*ificheros));
+			commit.addFichero(&(*ificheros));
 			inicio = pos + 1;
 			numFicheros = numFicheros.substr(inicio, numFicheros.length());
 			tamFin = numFicheros.length();
@@ -112,21 +108,34 @@ void GitCode::cargarCommits(string mfileCommits) {
 			j++;
 			ificheros++;
 		}
-		nombresFicheros.push_back((*ificheros).getNombre());
-		//commit.addfichero(&(*ificheros));
-		nuevoCommit();
-		//commits.push_back(commit);	
-		//nuevoCommit(commit);
+		commit.addFichero(&(*ificheros));
+		nuevoCommit(commit);
 	}
 	inputStream.close();
 }
 
-Fichero* GitCode::buscarFichero(string mnombre){
-
+template<class T>
+unsigned long GitCode::djb2(string str) {
+	unsigned long hash = 5381;
+	int c;
+	for (int i = 0; i < str.length(); i++) {
+		c = str[i];
+		hash = ((hash << 5) + hash) + c;
+	}
+	return hash;
 }
 
+
 bool GitCode::getCommit(string mcodigo, Commit& mcommit) {
-	
+	RefCommit refcommi;
+	refcommi.setCodCommit(mcodigo);
+	unsigned long mclave = djb2(refcommi.getCodCommit());
+	RefCommit *encontrado = commitsPorClave.buscar(mclave, refcommi);
+	if (encontrado) {
+		mcommit = (*(*encontrado).itc);
+		return true;
+	}
+	return false;
 }
 
 list<Commit*> GitCode::getCommitFechas(Fecha inicio, Fecha fin) {
@@ -156,20 +165,30 @@ list<Commit*> GitCode::getCommitFichero(string mnombre) {
 }
 
 void GitCode::nuevoCommit(Commit mcommit) {
-	list<Commit>::iterator itc;
-	commits.push_back(mcommit);
-	itc = commits.end();
-	itc--;
-	RefCommit tabla(mcommit.getCodigo(), itc);
-	float clave = commitsPorClave.djb2(tabla.getCodCommit());
-	if (commitsPorClave.buscar(clave,tabla) throw ERROR_DATO_YA_INSERTADO();
-	else {
-		commitsPorClave.insertar(arbol);
+	RefCommit tabla;
+	tabla.setCodCommit(mcommit.getCodigo());
+	unsigned long mclave = djb2(tabla.getCodCommit());
+	RefCommit *encontrado = commitsPorClave.buscar(mclave, tabla);
+	if (!encontrado) {
+		commits.push_back(mcommit);
+		list<Commit>::iterator icommit = commits.end();
+		icommit--;
+		tabla.itc = icommit;
+		commitsPorClave.insertar(mclave, tabla);
 	}
+	else throw ERROR_DATO_YA_INSERTADO();
 }
 
-void GitCode::borraCommit(string mcodigo)
-{
+void GitCode::borraCommit(string mcodigo){
+	RefCommit tabla;
+	tabla.setCodCommit(mcodigo);
+	unsigned long mclave = djb2(tabla.getCodCommit());
+	RefCommit *encontrado = commitsPorClave.buscar(mclave, tabla);
+	if (encontrado) {
+		commits.erase(encontrado->itc);
+		commitsPorClave.eliminar(mclave, *encontrado);
+	}
+	else throw ERROR_COMMIT_NO_ENCONTRADO();
 }
 
 string GitCode::getStatus()
@@ -177,10 +196,41 @@ string GitCode::getStatus()
 	return string();
 }
 
-void GitCode::nuevoFichero(Fichero & mfichero)
-{
+/*list<Fichero*> GitCode::getFicherosActivos(){
+	list<Fichero*> ficheroActivo;
+	list<Fichero*>::iterator iFicherosActivos;
+	iFicherosActivos = ficheroActivo.begin();
+	int tam = ficherosActivos.getTamaTabla();
+	while (iFicherosActivos < tam){
+		ficheroActivo.push_back((*iFicherosActivos));
+		iFicherosActivos++;
+	}
+	return ficheroActivo;
+}*/
+
+void GitCode::nuevoFichero(Fichero &mfichero){
+	ficheros.push_back(mfichero);
 }
 
-void GitCode::borraFichero(string mnombre)
-{
+void GitCode::borraFichero(string mnombre) {
+	list<Fichero>::iterator ificheros;
+	ificheros = ficheros.begin();
+	bool encontrado = false;
+	while ((ificheros != ficheros.end()) && !encontrado) {
+		if ((*ificheros).getNombre() == mnombre) {
+			encontrado = true;
+		}
+		else {
+			ificheros++;
+		}
+	}
+	if (encontrado) {
+		list<Commit>::iterator icommits;
+		icommits = commits.begin();
+		while (icommits != commits.end()) {
+			(*icommits).eliminarFichero(mnombre);
+			icommits++;
+	}
+		ficheros.erase(ificheros);
+	}
 }
