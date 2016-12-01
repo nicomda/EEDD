@@ -59,11 +59,11 @@ public:
 	//creamos el metodo para saber si existe un commit.
 	bool getCommit(string mcodigo, Commit& mcommit);
 	//Creamos los vectores de commits
-	list<Commit*> getCommitFechas(Fecha inicio, Fecha fin); //Para obtener commits entre dos fechas.
-	list<Commit*> getCommitFichero(string mnombre); //Para obtener commits que contienen un fichero.
+	vector<Commit*> getCommitFechas(Fecha inicio, Fecha fin); //Para obtener commits entre dos fechas.
+	vector<Commit*> getCommitFichero(string mnombre); //Para obtener commits que contienen un fichero.
 
 	//Creamos la funcion para anadir un nuevo commit
-	unsigned long djb2(string str);
+	unsigned long djb2(string mstring);
 	void nuevoCommit(Commit mcommit);
 	void borraCommit(string mcodigo);
 	string getStatus();

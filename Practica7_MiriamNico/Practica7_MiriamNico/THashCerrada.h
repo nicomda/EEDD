@@ -13,7 +13,7 @@ private:
 		T dato;
 		char estado;
 	public:
-		Casilla() :dato() { estado = ''; }
+		Casilla() :dato(NULL) { estado = ' '; }
 	};
 	vector<Casilla> tabla;
 	unsigned tamTabla;
@@ -30,20 +30,19 @@ public:
 	}
 
 	THashCerrada(vector<Casilla> mtabla) :tabla(mtabla) { tamTabla = 0; numeroElementos = 0; maxColision = 0; }
-
-	bool insertar(long mclave, const T& mdato);
-	T* buscar(long mclave, const T& mdato);
-	bool eliminar(long mclave, const T& mdato);
 	unsigned getTamaTabla() { return tamTabla; }
 	unsigned getNumeroElementos() { return numeroElementos; }
 	unsigned getMaxColisiones() { return maxColision; }
+	bool insertar(long mclave, const T& mdato);
+	T* buscar(long mclave, const T& mdato);
+	bool eliminar(long mclave, const T& mdato);
 	float factorCarga();
 
 };
 #endif // !THASHCERRADA_H
 
 template<class T>
-bool THashCerrada<T>::insertar(long mclave, const T & mdato) {
+inline bool THashCerrada<T>::insertar(long mclave, const T& mdato) {
 	int i = 0;
 	unsigned pos = mclave + pow(i, 2);
 	bool libre = false;
@@ -68,7 +67,7 @@ bool THashCerrada<T>::insertar(long mclave, const T & mdato) {
 }
 
 template<class T>
-T * THashCerrada<T>::buscar(long mclave, const T& mdato) {
+inline T* THashCerrada<T>::buscar(long mclave, const T& mdato) {
 	if (tabla == NULL) {
 		return NULL;
 	}
@@ -96,7 +95,7 @@ T * THashCerrada<T>::buscar(long mclave, const T& mdato) {
 
 
 template<class T>
-bool THashCerrada<T>::eliminar(long mclave, const T& mdato) {
+inline bool THashCerrada<T>::eliminar(long mclave, const T& mdato) {
 	if (tabla == NULL) {
 		return NULL;
 	}
@@ -125,7 +124,7 @@ bool THashCerrada<T>::eliminar(long mclave, const T& mdato) {
 }
 
 template<class T>
-float THashCerrada<T>::factorCarga(){
+inline float THashCerrada<T>::factorCarga(){
 	return numeroElementos % tamTabla;
 }
 

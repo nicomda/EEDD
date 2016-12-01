@@ -4,7 +4,7 @@ Commit::Commit(string mcodigo, string mmarcaDeTiempo, string mmensaje) :ficheros
 	this->codigo = mcodigo;
 	this->marcaDeTiempo = mmarcaDeTiempo;
 	this->mensaje = mmensaje;
-	//this->f.pasarAFecha(mmarcaDeTiempo);
+	this->f.pasarAFecha(mmarcaDeTiempo);
 }
 
 Commit::Commit(const Commit& orig) :ficherosMod(orig.ficherosMod), f(orig.f) {
@@ -14,7 +14,7 @@ Commit::Commit(const Commit& orig) :ficherosMod(orig.ficherosMod), f(orig.f) {
 	//this->f.pasarFFecha(orig.marcaDeTiempo);
 }
 
-/*Fecha Commit::pasarFFecha(string marcaTiempo) {
+Fecha Commit::pasarFFecha(string marcaTiempo) {
 	short anio, mes, dia, hora, min, seg;
 	anio = std::stoi(marcaTiempo.substr(0, 4));
 	mes = std::stoi(marcaTiempo.substr(4, 2));
@@ -25,7 +25,7 @@ Commit::Commit(const Commit& orig) :ficherosMod(orig.ficherosMod), f(orig.f) {
 	Fecha fecha(anio, mes, dia, hora, min, seg);
 	return fecha;
 }
-*/
+
 bool Commit::entreDosFechas(Fecha inicio, Fecha fin) {
 	return f >= inicio && f <= fin;
 }

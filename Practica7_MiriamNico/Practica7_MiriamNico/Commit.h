@@ -19,7 +19,7 @@ private:
 	//Creamos una fecha
 	Fecha f;
 	//Creamos el casting para pasar a fecha formato string.
-	// pasarFFecha(string marcaTiempo);
+	Fecha pasarFFecha(string marcaTiempo);
 public:
 	//Creamos constructores de la clase:
 	Commit() :ficherosMod(), f() { codigo = marcaDeTiempo = mensaje = " "; }; //Por defecto
@@ -32,6 +32,7 @@ public:
 	string getMarcaDeTiempo() { return marcaDeTiempo; };
 	string getMensaje() { return mensaje; };
 	Fecha& getFecha() { return f; };
+	string getCadFecha() { return f.getFecha(); }
 	//Creamos una función que nos devuelva true o false si entre dos fechas se encuentra alguna fecha.
 	bool entreDosFechas(Fecha inicio, Fecha fin);
 	//Creamos los metodos set de la clase.

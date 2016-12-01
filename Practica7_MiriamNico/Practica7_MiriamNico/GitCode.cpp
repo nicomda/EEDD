@@ -115,7 +115,7 @@ void GitCode::cargarCommits(string mfileCommits) {
 }
 
 template<class T>
-unsigned long GitCode::djb2(string str) {
+unsigned long GitCode::djb2(string mstring) {
 	unsigned long hash = 5381;
 	int c;
 	for (int i = 0; i < str.length(); i++) {
@@ -138,8 +138,8 @@ bool GitCode::getCommit(string mcodigo, Commit& mcommit) {
 	return false;
 }
 
-list<Commit*> GitCode::getCommitFechas(Fecha inicio, Fecha fin) {
-	list<Commit*> vCommits;
+vector<Commit*> GitCode::getCommitFechas(Fecha inicio, Fecha fin) {
+	vector<Commit*> vCommits;
 	list<Commit>::iterator icommit;
 	icommit = commits.begin();
 	while (icommit != commits.end()) {
@@ -151,8 +151,8 @@ list<Commit*> GitCode::getCommitFechas(Fecha inicio, Fecha fin) {
 	return vCommits;
 }
 
-list<Commit*> GitCode::getCommitFichero(string mnombre) {
-	list<Commit*> vCommits;
+vector<Commit*> GitCode::getCommitFichero(string mnombre) {
+	vector<Commit*> vCommits;
 	list<Commit>::iterator icommit;
 	icommit = commits.begin();
 	while (icommit != commits.end()) {

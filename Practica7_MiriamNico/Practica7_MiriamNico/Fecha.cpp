@@ -145,12 +145,11 @@ string Fecha::getFecha(){
 	return cadena;
 }
 
-//void Fecha::pasarAFecha(string marcaT){
-//
-//	anio = stoi(marcaT.substr(0, 4));
-//	mes = stoi(marcaT.substr(3, 2));
-//	dia = stoi(marcaT.substr(4, 2));
-//	hora = stoi(marcaT.substr(7, 2));
-//	minuto =stoi(marcaT.substr(9, 2));
-//	segundo = stoi(marcaT.substr(11, 2));
-//}
+void Fecha::pasarAFecha(string marcaT){
+	anio = stoi(marcaT.substr(0, 4));
+	mes = stoi(marcaT.substr(3, 2));
+	dia = stoi(marcaT.substr(4, 2));
+	hora = stoi(marcaT.substr(7, 2));
+	minuto =stoi(marcaT.substr(9, 2));
+	segundo = stoi(marcaT.substr(11, 2));
+}
