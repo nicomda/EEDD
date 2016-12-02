@@ -40,17 +40,17 @@ private:
 	//Creamos la lista de commits
 	list<Commit> commits;
 	//Creamos el vector de ficheros.
-	list<Fichero> ficheros;
+	vector<Fichero> ficheros;
 	//Funciones para cargar los Ficheros y los Commits.
 	void cargarFichero(string mfileFichero);
 	void cargarCommits(string mfileCommits);
 	//Creamos la tabla hash para la asociacion con los ficheros
-	THashCerrada<Fichero*> ficherosActivos;
-
+	//THashCerrada<Fichero*> ficherosActivos;
+	unsigned long djb2(string mstring);
 
 public:
 	//Creamos constructores de la clase:
-	GitCode() :fileFichero(" "), fileCommits(" "), commits(), ficheros(), ficherosActivos(TAM){}; //Por defecto
+	GitCode() :fileFichero(" "), fileCommits(" "), commits(), ficheros(), commitsPorClave(TAM){}; //Por defecto
 	GitCode(string mfileFichero, string mfileCommits); //Por parametros
 	GitCode(const GitCode& orig); //Por copia
 	//Creamos el destructor de la clase.
@@ -63,11 +63,10 @@ public:
 	vector<Commit*> getCommitFichero(string mnombre); //Para obtener commits que contienen un fichero.
 
 	//Creamos la funcion para anadir un nuevo commit
-	unsigned long djb2(string mstring);
 	void nuevoCommit(Commit mcommit);
 	void borraCommit(string mcodigo);
 	string getStatus();
-	int getNumFicheros() { return ficherosActivos.getNumeroElementos(); }
+	//int getNumFicheros() { return ficherosActivos.getNumeroElementos(); }
 	//list<Fichero*> getFicherosActivos();
 	void nuevoFichero(Fichero& mfichero);
 	void borraFichero(string mnombre);

@@ -53,4 +53,11 @@ public:
 		return "El Commit ya se ha insertado en la lista.";
 	}
 };
+
+class ERROR_CLAVE_REPETIDA :public exception {
+public:
+	const char* what() {
+		return "La clave del dato que se desea insertar ya existe.";
+	}
+};
 #endif // !EXCEPCIONES_H
