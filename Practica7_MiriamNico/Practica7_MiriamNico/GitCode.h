@@ -12,7 +12,7 @@
 #include "THashCerrada.h"
 
 using namespace std;
-const int TAM = 100000;
+const int TAM = 14000;
 class GitCode {
 private:
 

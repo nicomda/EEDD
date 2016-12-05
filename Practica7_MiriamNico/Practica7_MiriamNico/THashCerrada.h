@@ -10,7 +10,7 @@ class Casilla {
 public:
 	T dato;
 	char estado;
-	Casilla() :dato() { estado = ' '; }
+	Casilla() :dato() { estado = '0'; }
 };
 
 template <class T>
@@ -68,7 +68,9 @@ bool THashCerrada<T>::insertar(long mclave, const T& mdato) {
 	if (colisiones > maxColision) {
 		maxColision = colisiones;
 	}
+
 	Casilla<T> casilla;
+	posicionT = pos;
 	casilla.dato = mdato;
 	casilla.estado = '1';
 	tabla[posicionT] = casilla;
@@ -89,7 +91,7 @@ T* THashCerrada<T>::buscar(long mclave, const T& mdato) {
 			encontrado = true;
 		}
 		else {
-			if (tabla[pos].estado != ' ') {
+			if (tabla[pos].estado != '0') {
 				i++;
 				pos =( mclave + (i*i))%tamTabla;
 			}
@@ -117,7 +119,7 @@ inline bool THashCerrada<T>::eliminar(long mclave, const T& mdato) {
 			encontrado = true;
 		}
 		else {
-			if (tabla[pos].estado != ' ') {
+			if (tabla[pos].estado != '0') {
 				i++;
 				pos =( mclave + (i*i))%tamTabla;
 			}
